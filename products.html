@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Brownies – Brownie Babe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Archivo+Black&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    background:#EEEBE6;
+    font-family:'Archivo',sans-serif;
+    color:#4B3932;
+}
+
+/* HEADER */
+.header{
+    background:#000;
+    color:#EEEBE6;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.header h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:22px;
+    margin:0;
+}
+.header a{
+    color:#EEEBE6;
+    text-decoration:none;
+    margin-left:15px;
+}
+
+/* TITLE */
+.page-title{
+    text-align:center;
+    font-family:'Archivo Black',sans-serif;
+    font-size:36px;
+    margin:40px 0 20px;
+}
+
+/* PRODUCTS GRID */
+.products{
+    padding:0 8% 60px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+}
+
+/* PRODUCT */
+.product{
+    text-align:center;
+    cursor:pointer;
+    transition: transform 0.2s;
+}
+.product:hover{
+    transform: scale(1.05);
+}
+.product img{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+}
+.product h3{
+    font-family:'Archivo Black',sans-serif;
+    font-size:16px;
+    margin:10px 0 5px;
+}
+.product p{
+    font-weight:600;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+.modal-box{
+    background:#EEEBE6;
+    width:90%;
+    max-width:420px;
+    padding:25px;
+    border-radius:10px;
+    position:relative;
+    max-height:90vh;
+    overflow-y:auto;
+}
+.close{
+    position:absolute;
+    top:10px;
+    right:15px;
+    cursor:pointer;
+    font-size:20px;
+}
+
+/* TOPPINGS */
+.toppings{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:8px;
+}
+.topping{
+    border:1px solid #4B3932;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+}
+.topping.active{
+    background:#4B3932;
+    color:#EEEBE6;
+}
+
+/* CART */
+#cart{
+    position:fixed;
+    top:0;
+    right:-100%;
+    width:350px;
+    height:100%;
+    background:#EEEBE6;
+    padding:20px;
+    transition:.3s;
+    z-index:1200;
+    overflow-y:auto;
+}
+#cart.open{right:0;}
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'Archivo Black';
+    margin-bottom:15px;
+}
+.cart-item{
+    margin:10px 0;
+    font-size:14px;
+    border-bottom:1px solid #4B3932;
+    padding-bottom:8px;
+}
+.cart-item img{
+    width:50px;
+    display:block;
+}
+.remove-item{
+    cursor:pointer;
+    color:red;
+    font-weight:bold;
+    margin-left:10px;
+    font-size:14px;
+}
+.cart-total{
+    font-weight:bold;
+    margin-top:15px;
+    font-size:16px;
+    border-top:1px solid #4B3932;
+    padding-top:10px;
+    color:#25D366; /* bold green */
+}
+.order-btn{
+    margin-top:15px;
+    width:100%;
+    padding:10px;
+    background:#25D366;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>Hey babe, are you ready to shop?</h1>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="toggleCart()">Cart</a>
+    </div>
+</div>
+
+<h2 class="page-title">Our Brownies</h2>
+
+<!-- PRODUCTS -->
+<div class="products">
+
+<div class="product" onclick="openModal('Valentine Brownie',280,'images/valentine-special1.jpeg',true,false,true)">
+<img src="images/valentine-special1.jpeg">
+<h3>Valentine Brownie</h3>
+<p>R280</p>
+</div>
+
+<div class="product" onclick="openModal('Small Valentine Brownie',120,'images/valentine-special2.jpeg',true,false,true)">
+<img src="images/valentine-special2.jpeg">
+<h3>Small Valentine Brownie</h3>
+<p>R120</p>
+</div>
+
+<div class="product" onclick="openModal('All-in-One Brownie',360,'images/all-in-one.jpeg',false,false,false)">
+<img src="images/all-in-one.jpeg">
+<h3>All-in-One Brownie</h3>
+<p>R360</p>
+</div>
+
+<div class="product" onclick="openModal('Customised Brownie',290,'images/customised.jpeg',true,true,false)">
+<img src="images/customised.jpeg">
+<h3>Customised Brownie</h3>
+<p>R290</p>
+</div>
+
+<div class="product" onclick="openModal('Small Customised Brownie',120,'images/small-customised.jpeg',true,true,false)">
+<img src="images/small-customised.jpeg">
+<h3>Small Customised Brownie</h3>
+<p>R120</p>
+</div>
+
+<div class="product" onclick="openModal('Overload Brownie',320,'images/overload.jpeg',true,true,false)">
+<img src="images/overload.jpeg">
+<h3>Overload Brownie</h3>
+<p>R320</p>
+</div>
+
+<div class="product" onclick="openModal('Specialty Brownie',0,'images/specialty-brownie.jpeg',false,false,false)">
+<img src="images/specialty-brownie.jpeg">
+<h3>Specialty Brownie</h3>
+<p>Request a price</p>
+</div>
+
+<div class="product" onclick="openModal('Fudge',20,'images/fudge.jpeg',false,false,false)">
+<img src="images/fudge.jpeg">
+<h3>Fudge</h3>
+<p>R20</p>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<span class="close" onclick="closeModal()">✖</span>
+<h3 id="modalTitle"></h3>
+<img id="modalImg" style="width:100%;height:200px;object-fit:contain">
+
+<!-- Message section -->
+<div id="messageSection">
+<label>Message</label>
+<textarea id="message" style="width:100%"></textarea>
+</div>
+
+<!-- Toppings section -->
+<div id="toppingsSection">
+<label>Toppings (R20 each, choose multiple)</label>
+<div style="font-size:12px;color:#4B3932;margin-bottom:5px;">Each topping costs R20</div>
+<div class="toppings" id="toppingsBox"></div>
+</div>
+
+<button onclick="addToCart()" style="margin-top:15px;width:100%;padding:10px;background:#4B3932;color:#EEEBE6;border:none;">Add to Cart</button>
+</div>
+</div>
+
+<!-- CART -->
+<div id="cart">
+<div class="cart-header">
+<span>Your Cart</span>
+<span style="cursor:pointer" onclick="toggleCart()">✖</span>
+</div>
+<div id="cartItems"></div>
+<div class="cart-total" id="cartTotal"></div>
+<button class="order-btn" onclick="orderNow()">Order Now</button>
+</div>
+
+<script>
+let cart=[];
+let current={};
+
+const toppingList=['Chocolate','Tex','M&M','Bueno','Biscoff','Oreos'];
+
+function openModal(name,price,img,allowMessage,allowToppings,messageOnly=false){
+    current={name,price,img,toppings:[],allowToppings,allowMessage,messageOnly};
+    document.getElementById('modalTitle').innerText=name;
+    document.getElementById('modalImg').src=img;
+
+    // Message
+    const messageSection=document.getElementById('messageSection');
+    if(allowMessage){
+        messageSection.style.display='block';
+        document.getElementById('message').value='';
+    } else {
+        messageSection.style.display='none';
+    }
+
+    // Toppings
+    const toppingsSection=document.getElementById('toppingsSection');
+    const box=document.getElementById('toppingsBox');
+    box.innerHTML='';
+    if(allowToppings){
+        toppingsSection.style.display='block';
+        toppingList.forEach(t=>{
+            let d=document.createElement('div');
+            d.className='topping';
+            d.innerText=t;
+            d.onclick=()=>{
+                d.classList.toggle('active');
+                current.toppings.includes(t)?
+                    current.toppings=current.toppings.filter(x=>x!==t):
+                    current.toppings.push(t);
+            };
+            box.appendChild(d);
+        });
+    } else {
+        toppingsSection.style.display='none';
+    }
+
+    document.getElementById('modal').style.display='flex';
+}
+
+function closeModal(){document.getElementById('modal').style.display='none';}
+
+function addToCart(){
+    if(current.allowMessage){
+        current.message=document.getElementById('message').value;
+    }
+    let finalPrice=current.price;
+    if(current.allowToppings){
+        finalPrice += current.toppings.length * 20;
+    }
+    cart.push({...current,finalPrice});
+    closeModal();
+    toggleCart();
+    renderCart();
+}
+
+function toggleCart(){
+    document.getElementById('cart').classList.toggle('open');
+}
+
+function removeItem(index){
+    cart.splice(index,1);
+    renderCart();
+}
+
+function renderCart(){
+    const box=document.getElementById('cartItems');
+    const totalBox=document.getElementById('cartTotal');
+    box.innerHTML='';
+    let total=0;
+    cart.forEach((i,index)=>{
+        total += i.finalPrice;
+        box.innerHTML+=`
+        <div class="cart-item">
+            <img src="${i.img}">
+            <strong>${i.name}</strong>
+            <span class="remove-item" onclick="removeItem(${index})">✖</span><br>
+            R${i.finalPrice}<br>
+            ${i.allowMessage && i.message?`Message: ${i.message}<br>`:''}
+            ${i.allowToppings && i.toppings.length?`Toppings: ${i.toppings.join(', ')}`:''}
+        </div>`;
+    });
+    totalBox.innerHTML='Total: <strong>R'+total+'</strong>';
+    totalBox.style.color='#25D366';
+}
+
+// WhatsApp order with numbered list
+function orderNow(){
+    if(cart.length === 0){
+        alert('Your cart is empty!');
+        return;
+    }
+    let message = 'Hello! I would like to place an order:\n\n';
+    cart.forEach((i,index)=>{
+        message += `${index+1}. ${i.name} - R${i.finalPrice}\n`;
+        if(i.allowMessage && i.message) message += `   Message: ${i.message}\n`;
+        if(i.allowToppings && i.toppings.length) message += `   Toppings: ${i.toppings.join(', ')}\n`;
+    });
+    let total = cart.reduce((sum,i)=>sum+i.finalPrice,0);
+    message += `\nTotal: R${total}`;
+    let url = 'https://wa.me/27689795490?text=' + encodeURIComponent(message);
+    window.open(url,'_blank');
+}
+</script>
+
+</body>
+</html>
