@@ -242,12 +242,19 @@ button:hover{
     font-weight:bold;
 }
 
-/* Added to cart message */
+/* Added to cart message animation */
 #addedMessage{
     color: #25D366;
     font-weight:bold;
     margin:10px 0;
-    display:none;
+    display:inline-block;
+    opacity:0;
+    transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.3s;
+}
+#addedMessage.show{
+    opacity:1;
+    transform: scale(1.1);
 }
 </style>
 </head>
@@ -317,87 +324,93 @@ document.write(products.map((x,i)=>`
 </div>
 
 <script>
-let cart=[],current;
+let cart = [], current;
 
-function toggleCart(){document.getElementById('cart').classList.toggle('open');}
+function toggleCart(){
+    document.getElementById('cart').classList.toggle('open');
+}
 
 function openModal(i){
-current={...products[i],tops:[],msg:''};
-document.getElementById('mName').innerText=current.n;
-document.getElementById('mImg').src=current.i;
+    current = { ...products[i], tops: [], msg: '' };
+    document.getElementById('mName').innerText = current.n;
+    document.getElementById('mImg').src = current.i;
 
-// Message box
-document.getElementById('msgBox').innerHTML = current.m
-  ? `<label style="display:block; font-weight:bold; color:#4b2e23; margin-bottom:5px;">💌 Add a personal message (optional)</label>
-     <textarea placeholder="Write your message..." style="width:100%; padding:10px; border:2px dashed #4b2e23; border-radius:15px;" oninput="current.msg=this.value"></textarea>`
-  : '';
+    document.getElementById('msgBox').innerHTML = current.m
+        ? `<label style="display:block; font-weight:bold; color:#4b2e23; margin-bottom:5px;">💌 Add a personal message (optional)</label>
+           <textarea placeholder="Write your message..." style="width:100%; padding:10px; border:2px dashed #4b2e23; border-radius:15px;" oninput="current.msg=this.value"></textarea>`
+        : '';
 
-// Toppings
-document.getElementById('topBox').innerHTML = current.t
-  ? ['Chocolate Variety','Biscoff','Oreos','Tex Chocolate','Kit Kat','M&M’s','Bueno (Kinder Joy)']
-      .map(t=>`<div class="topping" onclick="toggleTop(this,'${t}')">${t} (+R20)</div>`).join('')
-  : '';
+    document.getElementById('topBox').innerHTML = current.t
+        ? ['Chocolate Variety','Biscoff','Oreos','Tex Chocolate','Kit Kat','M&M’s','Bueno (Kinder Joy)']
+            .map(t=>`<div class="topping" onclick="toggleTop(this,'${t}')">${t} (+R20)</div>`).join('')
+        : '';
 
-document.getElementById('addedMessage').style.display='none';
-document.getElementById('modal').style.display='flex';
+    document.getElementById('addedMessage').classList.remove('show');
+    document.getElementById('modal').style.display = 'flex';
 }
 
-function toggleTop(el,t){
-if(el.classList.contains('active')){
-el.classList.remove('active');
-current.tops=current.tops.filter(x=>x!=t);
-}else{
-el.classList.add('active');
-current.tops.push(t);
-}
+function toggleTop(el, t){
+    if(el.classList.contains('active')){
+        el.classList.remove('active');
+        current.tops = current.tops.filter(x => x != t);
+    } else {
+        el.classList.add('active');
+        current.tops.push(t);
+    }
 }
 
-function closeModal(){document.getElementById('modal').style.display='none';}
+function closeModal(){
+    document.getElementById('modal').style.display = 'none';
+}
 
 function confirmAdd(){
-current.total=(current.p||0)+(current.tops.length*20);
-cart.push(current);
-renderCart();
+    current.total = (current.p || 0) + (current.tops.length * 20);
+    cart.push(current);
+    renderCart();
 
-// Show "Added to cart!" message for 1.5 seconds
-let msg=document.getElementById('addedMessage');
-msg.style.display='block';
-setTimeout(()=>{msg.style.display='none'; closeModal();},1500);
+    const msg = document.getElementById('addedMessage');
+    msg.classList.add('show'); // start animation
+
+    setTimeout(() => {
+        msg.classList.remove('show'); // hide animation
+        closeModal();
+        document.getElementById('cart').classList.add('open'); // open cart
+    }, 1500);
 }
 
 function renderCart(){
-let t=0,box=document.getElementById('cartItems');
-box.innerHTML='';
-cart.forEach((i,n)=>{
-t+=i.total;
-box.innerHTML+=`
-<div class="cart-item">
-<span class="remove" onclick="cart.splice(${n},1);renderCart()">✖</span>
-<b>${i.n}</b><br>
-R${i.total}<br>
-${i.msg?`Msg: ${i.msg}<br>`:''}
-${i.tops.length?`Toppings: ${i.tops.join(', ')}`:''}
-</div>`;
-});
-document.getElementById('total').innerText='Total: R'+t;
-document.getElementById('cartCount').innerText=cart.length;
+    let totalPrice = 0;
+    const box = document.getElementById('cartItems');
+    box.innerHTML = '';
+    cart.forEach((item, index) => {
+        totalPrice += item.total;
+        box.innerHTML += `
+            <div class="cart-item">
+                <span class="remove" onclick="cart.splice(${index},1); renderCart()">✖</span>
+                <b>${item.n}</b><br>
+                R${item.total}<br>
+                ${item.msg ? `Msg: ${item.msg}<br>` : ''}
+                ${item.tops.length ? `Toppings: ${item.tops.join(', ')}` : ''}
+            </div>`;
+    });
+    document.getElementById('total').innerText = 'Total: R' + totalPrice;
+    document.getElementById('cartCount').innerText = cart.length;
 }
 
 function order(){
-if(cart.length===0){alert("Your cart is empty!"); return;}
-let txt='Brownie Babe Order:%0A';
-cart.forEach(i=>{
-txt+=`${i.n} - R${i.total}%0A`;
-if(i.msg) txt+=`Message: ${i.msg}%0A`;
-if(i.tops.length) txt+=`Toppings: ${i.tops.join(', ')}`%0A;
-txt+='%0A';
-});
-window.open(`https://wa.me/27689795490?text=${txt}`);
+    if(cart.length === 0){ alert("Your cart is empty!"); return; }
+    let txt = 'Brownie Babe Order:%0A';
+    cart.forEach(i => {
+        txt += `${i.n} - R${i.total}%0A`;
+        if(i.msg) txt += `Message: ${i.msg}%0A`;
+        if(i.tops.length) txt += `Toppings: ${i.tops.join(', ')}%0A`;
+        txt += '%0A';
+    });
+    window.open(`https://wa.me/27689795490?text=${txt}`);
 }
 
-// Close modal by clicking outside
 window.onclick = function(e){
-    if(e.target.id=='modal') closeModal();
+    if(e.target.id == 'modal') closeModal();
 }
 </script>
 
