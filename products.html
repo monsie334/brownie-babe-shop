@@ -132,8 +132,36 @@ button:hover{
     width:90%;
     max-width:400px;
     border-radius:20px;
-    padding:20px;
-    text-align:center;
+    display:flex;
+    flex-direction:column;
+    max-height:90%;
+    overflow:hidden;
+    position:relative;
+}
+
+/* Modal content scrollable */
+.modal-content{
+    overflow-y:auto;
+    padding:20px 15px 0 15px;
+    flex-grow:1;
+}
+
+/* Fixed footer so Add to Cart is always visible */
+.modal-footer{
+    padding:15px;
+    background:#fff;
+    border-top:1px solid #ddd;
+}
+
+/* Close button black and top-right */
+.close{
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:24px;
+    cursor:pointer;
+    color:black;
+    z-index:10;
 }
 
 .modal-box img{
@@ -141,11 +169,6 @@ button:hover{
     height:200px;
     object-fit:cover;
     border-radius:20px;
-}
-
-.close{
-    float:right;
-    cursor:pointer;
 }
 
 /* PREMIUM TOPPINGS */
@@ -295,17 +318,19 @@ document.write(products.map((x,i)=>`
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-<div class="modal-box">
-<span class="close" onclick="closeModal()">❌</span>
-<h3 id="mName"></h3>
-<img id="mImg">
-
-<div id="msgBox" style="margin:10px 0;"></div>
-<div id="topBox" style="margin-top:10px;"></div>
-
-<div id="addedMessage">✔ Added to cart!</div>
-<button onclick="confirmAdd()">Add to Cart</button>
-</div>
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">❌</span>
+    <div class="modal-content">
+      <h3 id="mName"></h3>
+      <img id="mImg">
+      <div id="msgBox" style="margin:10px 0;"></div>
+      <div id="topBox" style="margin-top:10px;"></div>
+    </div>
+    <div class="modal-footer">
+      <div id="addedMessage">✔ Added to cart!</div>
+      <button onclick="confirmAdd()">Add to Cart</button>
+    </div>
+  </div>
 </div>
 
 <!-- CART -->
@@ -369,12 +394,12 @@ function confirmAdd(){
     renderCart();
 
     const msg = document.getElementById('addedMessage');
-    msg.classList.add('show'); // start animation
+    msg.classList.add('show');
 
     setTimeout(() => {
-        msg.classList.remove('show'); // hide animation
+        msg.classList.remove('show');
         closeModal();
-        document.getElementById('cart').classList.add('open'); // open cart
+        document.getElementById('cart').classList.add('open');
     }, 1500);
 }
 
