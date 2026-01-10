@@ -22,16 +22,21 @@ header{
     align-items:center;
 }
 
+.right-links{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
 header a{
     color:#fff;
     text-decoration:none;
-    font-size:22px;
+    font-weight:bold;
 }
 
 .cart-icon{
     cursor:pointer;
     position:relative;
-    font-size:22px;
 }
 
 .cart-icon span{
@@ -80,20 +85,44 @@ button{
     border-radius:20px;
     cursor:pointer;
     margin-top:10px;
+    width:100%;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.modal-box{
+    background:#fff;
+    width:90%;
+    max-width:400px;
+    border-radius:20px;
+    padding:20px;
+}
+
+.modal-box img{
+    width:100%;
+    border-radius:15px;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
 }
 
 /* TOPPINGS */
-.toppings{
-    margin-top:10px;
-    text-align:left;
-    font-size:14px;
-}
-
 .topping{
     border:2px solid #ddd;
     padding:6px;
     border-radius:10px;
-    margin-bottom:6px;
+    margin:6px 0;
     cursor:pointer;
 }
 
@@ -113,20 +142,12 @@ button{
     background:#fff7ee;
     box-shadow:-5px 0 15px rgba(0,0,0,0.3);
     padding:20px;
-    transition:0.3s;
-    z-index:999;
+    transition:.3s;
+    z-index:1100;
     border-radius:20px 0 0 20px;
 }
 
-#cart.open{
-    right:0;
-}
-
-.cart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+#cart.open{right:0;}
 
 .cart-item{
     background:#fff;
@@ -146,13 +167,11 @@ button{
     font-weight:bold;
     color:#25D366;
     font-size:18px;
-    margin-top:10px;
 }
 
 .order-btn{
     background:#25D366;
     width:100%;
-    font-size:16px;
     margin-top:10px;
 }
 </style>
@@ -161,138 +180,118 @@ button{
 <body>
 
 <header>
-    <a href="index.html">Home</a>
-    <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
+    <div>Hey babe, are you ready to shop?</div>
+    <div class="right-links">
+        <a href="index.html">Home</a>
+        <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
+    </div>
 </header>
 
 <h1>Our Brownies</h1>
 
 <div class="products">
+<script>
+const products=[
+{n:'Valentine Brownie',p:280,i:'valentine-special1.jpeg',m:true,t:false},
+{n:'Small Valentine Brownie',p:120,i:'valentine-special2.jpeg',m:true,t:false},
+{n:'All-in-One Brownie',p:360,i:'all-in-one.jpeg'},
+{n:'Customised Brownie',p:290,i:'customised.jpeg',m:true,t:true},
+{n:'Small Customised Brownie',p:120,i:'small-customised.jpeg',m:true,t:true},
+{n:'Overload Brownie',p:320,i:'overload.jpeg',m:true,t:true},
+{n:'Specialty Brownie',p:0,i:'specialty-brownie.jpeg'},
+{n:'Fudge',p:20,i:'fudge.jpeg'}
+];
 
-<!-- CUSTOMISED -->
+document.write(products.map((x,i)=>`
 <div class="card">
-<img src="images/customised.jpeg">
-<h3>Customised Brownie</h3>
-<p>R290</p>
-
-<div class="toppings" data-name="Customised Brownie">
-<strong>Toppings (R20 each – max 2)</strong>
-<div class="topping">Oreos</div>
-<div class="topping">Bar One</div>
-<div class="topping">KitKat</div>
-<div class="topping">Smarties</div>
+<img src="${x.i}">
+<h3>${x.n}</h3>
+<p>${x.p?`R${x.p}`:'Request price'}</p>
+<button onclick="openModal(${i})">Add to Cart</button>
+</div>`).join(''));
+</script>
 </div>
 
-<button onclick="addWithToppings(this,290)">Add to Cart</button>
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<span class="close" onclick="closeModal()">❌</span>
+<h3 id="mName"></h3>
+<img id="mImg">
+<div id="msgBox"></div>
+<div id="topBox"></div>
+<button onclick="confirmAdd()">Add to Cart</button>
 </div>
-
-<!-- SMALL CUSTOMISED -->
-<div class="card">
-<img src="images/small-customised.jpeg">
-<h3>Small Customised Brownie</h3>
-<p>R120</p>
-
-<div class="toppings" data-name="Small Customised Brownie">
-<strong>Toppings (R20 each – max 2)</strong>
-<div class="topping">Oreos</div>
-<div class="topping">Bar One</div>
-<div class="topping">KitKat</div>
-</div>
-
-<button onclick="addWithToppings(this,120)">Add to Cart</button>
-</div>
-
-<!-- OVERLOAD -->
-<div class="card">
-<img src="images/overload.jpeg">
-<h3>Overload Brownie</h3>
-<p>R320</p>
-
-<div class="toppings" data-name="Overload Brownie">
-<strong>Toppings (R20 each – max 2)</strong>
-<div class="topping">Oreos</div>
-<div class="topping">Ferrero</div>
-<div class="topping">Bar One</div>
-</div>
-
-<button onclick="addWithToppings(this,320)">Add to Cart</button>
-</div>
-
 </div>
 
 <!-- CART -->
 <div id="cart">
-    <div class="cart-header">
-        <h3>Your Cart</h3>
-        <span onclick="toggleCart()">❌</span>
-    </div>
-    <div id="cartItems"></div>
-    <div class="total" id="cartTotal">Total: R0</div>
-    <button class="order-btn" onclick="orderNow()">Order Now</button>
+<h3>Your Cart <span onclick="toggleCart()">❌</span></h3>
+<div id="cartItems"></div>
+<div class="total" id="total">Total: R0</div>
+<button class="order-btn" onclick="order()">Order Now</button>
 </div>
 
 <script>
-let cart=[];
+let cart=[],current;
 
-/* CART */
-function toggleCart(){
-    document.getElementById('cart').classList.toggle('open');
+function toggleCart(){document.getElementById('cart').classList.toggle('open');}
+
+function openModal(i){
+current={...products[i],tops:[],msg:''};
+document.getElementById('mName').innerText=current.n;
+document.getElementById('mImg').src=current.i;
+document.getElementById('msgBox').innerHTML=current.m?`<textarea placeholder="Write your message" oninput="current.msg=this.value"></textarea>`:'';
+document.getElementById('topBox').innerHTML=current.t?['Oreos','Bar One','KitKat','Smarties'].map(t=>`<div class="topping" onclick="toggleTop(this,'${t}')">${t} (+R20)</div>`).join(''):'';
+document.getElementById('modal').style.display='flex';
 }
 
-/* TOPPING SELECTION */
-document.querySelectorAll('.topping').forEach(t=>{
-    t.onclick=()=>{
-        let group=t.parentElement;
-        let active=group.querySelectorAll('.active');
-        if(t.classList.contains('active')){
-            t.classList.remove('active');
-        }else if(active.length<2){
-            t.classList.add('active');
-        }
-    }
-});
-
-/* ADD WITH TOPPINGS */
-function addWithToppings(btn,price){
-    let box=btn.previousElementSibling;
-    let name=box.dataset.name;
-    let chosen=[...box.querySelectorAll('.active')].map(t=>t.innerText);
-    let total=price+(chosen.length*20);
-
-    cart.push({name,price:total,toppings:chosen});
-    renderCart();
-
-    box.querySelectorAll('.topping').forEach(t=>t.classList.remove('active'));
+function toggleTop(el,t){
+if(el.classList.contains('active')){
+el.classList.remove('active');
+current.tops=current.tops.filter(x=>x!=t);
+}else if(current.tops.length<2){
+el.classList.add('active');
+current.tops.push(t);
+}
 }
 
-/* RENDER CART */
+function closeModal(){document.getElementById('modal').style.display='none';}
+
+function confirmAdd(){
+current.total=(current.p||0)+(current.tops.length*20);
+cart.push(current);
+closeModal();
+renderCart();
+}
+
 function renderCart(){
-    let c=document.getElementById('cartItems');
-    let total=0;
-    c.innerHTML='';
-    cart.forEach((i,n)=>{
-        total+=i.price;
-        c.innerHTML+=`
-        <div class="cart-item">
-        <span class="remove" onclick="cart.splice(${n},1);renderCart()">✖</span>
-        <strong>${i.name}</strong><br>
-        R${i.price}<br>
-        ${i.toppings.length?'Toppings: '+i.toppings.join(', '):''}
-        </div>`;
-    });
-    document.getElementById('cartTotal').innerText='Total: R'+total;
-    document.getElementById('cartCount').innerText=cart.length;
+let t=0,box=document.getElementById('cartItems');
+box.innerHTML='';
+cart.forEach((i,n)=>{
+t+=i.total;
+box.innerHTML+=`
+<div class="cart-item">
+<span class="remove" onclick="cart.splice(${n},1);renderCart()">✖</span>
+<b>${i.n}</b><br>
+R${i.total}<br>
+${i.msg?`Msg: ${i.msg}<br>`:''}
+${i.tops.length?`Toppings: ${i.tops.join(', ')}`:''}
+</div>`;
+});
+document.getElementById('total').innerText='Total: R'+t;
+document.getElementById('cartCount').innerText=cart.length;
 }
 
-/* WHATSAPP */
-function orderNow(){
-    let text='Brownie Babe Order:%0A';
-    cart.forEach(i=>{
-        text+=`${i.name} - R${i.price}%0A`;
-        if(i.toppings.length) text+=`Toppings: ${i.toppings.join(', ')}%0A`;
-        text+='%0A';
-    });
-    window.open(`https://wa.me/27689795490?text=${text}`);
+function order(){
+let txt='Brownie Babe Order:%0A';
+cart.forEach(i=>{
+txt+=`${i.n} - R${i.total}%0A`;
+if(i.msg) txt+=`Message: ${i.msg}%0A`;
+if(i.tops.length) txt+=`Toppings: ${i.tops.join(', ')}%0A`;
+txt+='%0A';
+});
+window.open(`https://wa.me/27689795490?text=${txt}`);
 }
 </script>
 
