@@ -64,20 +64,43 @@ h1{
     padding:20px;
 }
 
+/* CARD STYLE */
 .card{
-    background:#fff;
+    background:#f2e6dc; /* warm brown background */
     border-radius:20px;
     padding:15px;
     text-align:center;
-    box-shadow:0 4px 10px rgba(0,0,0,0.1);
-    border:3px solid #4b2e23; /* solid brown border */
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    border:3px solid #4b2e23;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform: scale(1.03);
+    box-shadow:0 8px 15px rgba(0,0,0,0.25);
+    background:#e6d1b8; /* slightly darker brown on hover */
+}
+
+/* Card click pop animation */
+.card:active {
+    transform: scale(0.97);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+    transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .card img{
     width:100%;
     height:180px;
-    object-fit:contain; /* full image visible */
-    border-radius:15px;
+    object-fit:contain;
+    border-radius:20px; /* all images rounded */
+    transition: transform 0.3s;
+}
+
+/* Zoom effect for Customised and Fudge */
+.card img.customized:hover,
+.card img.fudge:hover{
+    transform: scale(1.1);
 }
 
 button{
@@ -120,7 +143,7 @@ button:hover{
     width:100%;
     height:200px;
     object-fit:contain;
-    border-radius:15px;
+    border-radius:20px;
 }
 
 .close{
@@ -191,7 +214,6 @@ button:hover{
     color:red;
 }
 
-/* Move total and button slightly up to prevent cut-off */
 .cart-footer{
     margin-top:10px;
     flex-shrink:0;
@@ -251,7 +273,7 @@ const products=[
 
 document.write(products.map((x,i)=>`
 <div class="card">
-<img src="${x.i}">
+<img src="${x.i}" class="${x.n.includes('Customised')?'customized':''} ${x.n.includes('Fudge')?'fudge':''}">
 <h3>${x.n}</h3>
 <p>${x.p?`R${x.p}`:'Request price'}</p>
 <button onclick="openModal(${i})">Add to Cart</button>
@@ -311,9 +333,7 @@ document.getElementById('topBox').innerHTML = current.t
       .map(t=>`<div class="topping" onclick="toggleTop(this,'${t}')">${t} (+R20)</div>`).join('')
   : '';
 
-// hide added message initially
 document.getElementById('addedMessage').style.display='none';
-
 document.getElementById('modal').style.display='flex';
 }
 
@@ -364,7 +384,7 @@ let txt='Brownie Babe Order:%0A';
 cart.forEach(i=>{
 txt+=`${i.n} - R${i.total}%0A`;
 if(i.msg) txt+=`Message: ${i.msg}%0A`;
-if(i.tops.length) txt+=`Toppings: ${i.tops.join(', ')}%0A`;
+if(i.tops.length) txt+=`Toppings: ${i.tops.join(', ')}`%0A;
 txt+='%0A';
 });
 window.open(`https://wa.me/27689795490?text=${txt}`);
