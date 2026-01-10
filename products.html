@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Brownies – Brownie Babe</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Archivo+Black&display=swap" rel="stylesheet">
@@ -25,7 +26,7 @@ body{
 }
 .header h1{
     font-family:'Archivo Black',sans-serif;
-    font-size:22px;
+    font-size:20px;
     margin:0;
 }
 .header a{
@@ -38,39 +39,39 @@ body{
 .page-title{
     text-align:center;
     font-family:'Archivo Black',sans-serif;
-    font-size:36px;
-    margin:40px 0 20px;
+    font-size:34px;
+    margin:30px 0 20px;
 }
 
 /* PRODUCTS GRID */
 .products{
-    padding:0 8% 60px;
+    padding:0 8% 40px;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:30px;
 }
 
-/* PRODUCT */
+/* PRODUCT CARD */
 .product{
+    background:#F7F4EF;
+    padding:12px;
+    border-radius:10px;
     text-align:center;
     cursor:pointer;
-    transition: transform 0.2s;
-}
-.product:hover{
-    transform: scale(1.05);
 }
 .product img{
     width:100%;
-    height:220px;
+    height:200px;
     object-fit:contain;
 }
 .product h3{
     font-family:'Archivo Black',sans-serif;
-    font-size:16px;
+    font-size:15px;
     margin:10px 0 5px;
 }
 .product p{
     font-weight:600;
+    font-size:14px;
 }
 
 /* MODAL */
@@ -87,18 +88,13 @@ body{
     background:#EEEBE6;
     width:90%;
     max-width:420px;
-    padding:25px;
+    padding:20px;
     border-radius:10px;
-    position:relative;
-    max-height:90vh;
-    overflow-y:auto;
 }
 .close{
-    position:absolute;
-    top:10px;
-    right:15px;
+    float:right;
     cursor:pointer;
-    font-size:20px;
+    font-size:18px;
 }
 
 /* TOPPINGS */
@@ -106,18 +102,17 @@ body{
     display:flex;
     flex-wrap:wrap;
     gap:8px;
-    margin-top:8px;
 }
 .topping{
     border:1px solid #4B3932;
     padding:6px 10px;
     border-radius:6px;
-    cursor:pointer;
     font-size:13px;
+    cursor:pointer;
 }
 .topping.active{
     background:#4B3932;
-    color:#EEEBE6;
+    color:#fff;
 }
 
 /* CART */
@@ -137,51 +132,66 @@ body{
 .cart-header{
     display:flex;
     justify-content:space-between;
-    align-items:center;
     font-family:'Archivo Black';
-    margin-bottom:15px;
 }
 .cart-item{
-    margin:10px 0;
-    font-size:14px;
     border-bottom:1px solid #4B3932;
+    margin:10px 0;
     padding-bottom:8px;
-}
-.cart-item img{
-    width:50px;
-    display:block;
+    font-size:14px;
 }
 .remove-item{
-    cursor:pointer;
+    float:right;
     color:red;
-    font-weight:bold;
-    margin-left:10px;
-    font-size:14px;
+    cursor:pointer;
 }
 .cart-total{
-    font-weight:bold;
     margin-top:15px;
+    font-weight:bold;
+    color:#25D366;
     font-size:16px;
-    border-top:1px solid #4B3932;
-    padding-top:10px;
-    color:#25D366; /* bold green */
 }
 .order-btn{
-    margin-top:15px;
     width:100%;
+    margin-top:15px;
     padding:10px;
     background:#25D366;
-    color:white;
+    color:#fff;
     border:none;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
+}
+
+/* MOBILE FIX */
+@media (max-width:768px){
+    .header{
+        flex-direction:column;
+        gap:8px;
+        text-align:center;
+    }
+    .header h1{
+        font-size:16px;
+    }
+    .page-title{
+        font-size:26px;
+    }
+    .products{
+        grid-template-columns:repeat(2,1fr);
+        padding:0 5% 30px;
+        gap:20px;
+    }
+    .product img{
+        height:150px;
+    }
+    #cart{
+        width:100%;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <h1>Hey babe, are you ready to shop?</h1>
     <div>
@@ -192,88 +202,74 @@ body{
 
 <h2 class="page-title">Our Brownies</h2>
 
-<!-- PRODUCTS -->
 <div class="products">
 
-<div class="product" onclick="openModal('Valentine Brownie',280,'images/valentine-special1.jpeg',true,false,true)">
+<div class="product" onclick="openModal('Valentine Brownie',280,'images/valentine-special1.jpeg',true,false)">
 <img src="images/valentine-special1.jpeg">
-<h3>Valentine Brownie</h3>
-<p>R280</p>
+<h3>Valentine Brownie</h3><p>R280</p>
 </div>
 
-<div class="product" onclick="openModal('Small Valentine Brownie',120,'images/valentine-special2.jpeg',true,false,true)">
+<div class="product" onclick="openModal('Small Valentine Brownie',120,'images/valentine-special2.jpeg',true,false)">
 <img src="images/valentine-special2.jpeg">
-<h3>Small Valentine Brownie</h3>
-<p>R120</p>
+<h3>Small Valentine Brownie</h3><p>R120</p>
 </div>
 
-<div class="product" onclick="openModal('All-in-One Brownie',360,'images/all-in-one.jpeg',false,false,false)">
+<div class="product" onclick="openModal('All-in-One Brownie',360,'images/all-in-one.jpeg',false,false)">
 <img src="images/all-in-one.jpeg">
-<h3>All-in-One Brownie</h3>
-<p>R360</p>
+<h3>All-in-One Brownie</h3><p>R360</p>
 </div>
 
-<div class="product" onclick="openModal('Customised Brownie',290,'images/customised.jpeg',true,true,false)">
+<div class="product" onclick="openModal('Customised Brownie',290,'images/customised.jpeg',true,true)">
 <img src="images/customised.jpeg">
-<h3>Customised Brownie</h3>
-<p>R290</p>
+<h3>Customised Brownie</h3><p>R290</p>
 </div>
 
-<div class="product" onclick="openModal('Small Customised Brownie',120,'images/small-customised.jpeg',true,true,false)">
+<div class="product" onclick="openModal('Small Customised Brownie',120,'images/small-customised.jpeg',true,true)">
 <img src="images/small-customised.jpeg">
-<h3>Small Customised Brownie</h3>
-<p>R120</p>
+<h3>Small Customised Brownie</h3><p>R120</p>
 </div>
 
-<div class="product" onclick="openModal('Overload Brownie',320,'images/overload.jpeg',true,true,false)">
+<div class="product" onclick="openModal('Overload Brownie',320,'images/overload.jpeg',true,true)">
 <img src="images/overload.jpeg">
-<h3>Overload Brownie</h3>
-<p>R320</p>
+<h3>Overload Brownie</h3><p>R320</p>
 </div>
 
-<div class="product" onclick="openModal('Specialty Brownie',0,'images/specialty-brownie.jpeg',false,false,false)">
+<div class="product" onclick="openModal('Specialty Brownie',0,'images/specialty-brownie.jpeg',false,false)">
 <img src="images/specialty-brownie.jpeg">
-<h3>Specialty Brownie</h3>
-<p>Request a price</p>
+<h3>Specialty Brownie</h3><p>Request a price</p>
 </div>
 
-<div class="product" onclick="openModal('Fudge',20,'images/fudge.jpeg',false,false,false)">
+<div class="product" onclick="openModal('Fudge',20,'images/fudge.jpeg',false,false)">
 <img src="images/fudge.jpeg">
-<h3>Fudge</h3>
-<p>R20</p>
+<h3>Fudge</h3><p>R20</p>
 </div>
 
 </div>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
 <div class="modal-box">
 <span class="close" onclick="closeModal()">✖</span>
 <h3 id="modalTitle"></h3>
-<img id="modalImg" style="width:100%;height:200px;object-fit:contain">
+<img id="modalImg" style="width:100%;height:180px;object-fit:contain">
 
-<!-- Message section -->
-<div id="messageSection">
+<div id="messageBox">
 <label>Message</label>
 <textarea id="message" style="width:100%"></textarea>
 </div>
 
-<!-- Toppings section -->
-<div id="toppingsSection">
-<label>Toppings (R20 each, choose multiple)</label>
-<div style="font-size:12px;color:#4B3932;margin-bottom:5px;">Each topping costs R20</div>
-<div class="toppings" id="toppingsBox"></div>
+<div id="toppingsBox">
+<p><strong>Toppings (R20 each)</strong></p>
+<div class="toppings" id="toppings"></div>
 </div>
 
-<button onclick="addToCart()" style="margin-top:15px;width:100%;padding:10px;background:#4B3932;color:#EEEBE6;border:none;">Add to Cart</button>
+<button onclick="addToCart()" style="margin-top:15px;width:100%;padding:10px;background:#4B3932;color:#fff;border:none;">Add to Cart</button>
 </div>
 </div>
 
-<!-- CART -->
 <div id="cart">
 <div class="cart-header">
 <span>Your Cart</span>
-<span style="cursor:pointer" onclick="toggleCart()">✖</span>
+<span onclick="toggleCart()" style="cursor:pointer">✖</span>
 </div>
 <div id="cartItems"></div>
 <div class="cart-total" id="cartTotal"></div>
@@ -281,112 +277,67 @@ body{
 </div>
 
 <script>
-let cart=[];
-let current={};
-
+let cart=[], current={};
 const toppingList=['Chocolate','Tex','M&M','Bueno','Biscoff','Oreos'];
 
-function openModal(name,price,img,allowMessage,allowToppings,messageOnly=false){
-    current={name,price,img,toppings:[],allowToppings,allowMessage,messageOnly};
-    document.getElementById('modalTitle').innerText=name;
-    document.getElementById('modalImg').src=img;
+function openModal(name,price,img,msg,tops){
+current={name,price,img,msg,tops,chosen:[]};
+document.getElementById('modalTitle').innerText=name;
+document.getElementById('modalImg').src=img;
+document.getElementById('messageBox').style.display=msg?'block':'none';
+document.getElementById('toppingsBox').style.display=tops?'block':'none';
 
-    // Message
-    const messageSection=document.getElementById('messageSection');
-    if(allowMessage){
-        messageSection.style.display='block';
-        document.getElementById('message').value='';
-    } else {
-        messageSection.style.display='none';
-    }
-
-    // Toppings
-    const toppingsSection=document.getElementById('toppingsSection');
-    const box=document.getElementById('toppingsBox');
-    box.innerHTML='';
-    if(allowToppings){
-        toppingsSection.style.display='block';
-        toppingList.forEach(t=>{
-            let d=document.createElement('div');
-            d.className='topping';
-            d.innerText=t;
-            d.onclick=()=>{
-                d.classList.toggle('active');
-                current.toppings.includes(t)?
-                    current.toppings=current.toppings.filter(x=>x!==t):
-                    current.toppings.push(t);
-            };
-            box.appendChild(d);
-        });
-    } else {
-        toppingsSection.style.display='none';
-    }
-
-    document.getElementById('modal').style.display='flex';
+let t=document.getElementById('toppings');
+t.innerHTML='';
+if(tops){
+toppingList.forEach(x=>{
+let d=document.createElement('div');
+d.className='topping';
+d.innerText=x;
+d.onclick=()=>{d.classList.toggle('active');
+current.chosen.includes(x)?current.chosen=current.chosen.filter(a=>a!==x):current.chosen.push(x);}
+t.appendChild(d);
+});
+}
+document.getElementById('modal').style.display='flex';
 }
 
 function closeModal(){document.getElementById('modal').style.display='none';}
 
 function addToCart(){
-    if(current.allowMessage){
-        current.message=document.getElementById('message').value;
-    }
-    let finalPrice=current.price;
-    if(current.allowToppings){
-        finalPrice += current.toppings.length * 20;
-    }
-    cart.push({...current,finalPrice});
-    closeModal();
-    toggleCart();
-    renderCart();
+let total=current.price+(current.chosen.length*20);
+cart.push({...current,message:document.getElementById('message').value,total});
+closeModal();toggleCart();renderCart();
 }
 
-function toggleCart(){
-    document.getElementById('cart').classList.toggle('open');
-}
-
-function removeItem(index){
-    cart.splice(index,1);
-    renderCart();
-}
+function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
 function renderCart(){
-    const box=document.getElementById('cartItems');
-    const totalBox=document.getElementById('cartTotal');
-    box.innerHTML='';
-    let total=0;
-    cart.forEach((i,index)=>{
-        total += i.finalPrice;
-        box.innerHTML+=`
-        <div class="cart-item">
-            <img src="${i.img}">
-            <strong>${i.name}</strong>
-            <span class="remove-item" onclick="removeItem(${index})">✖</span><br>
-            R${i.finalPrice}<br>
-            ${i.allowMessage && i.message?`Message: ${i.message}<br>`:''}
-            ${i.allowToppings && i.toppings.length?`Toppings: ${i.toppings.join(', ')}`:''}
-        </div>`;
-    });
-    totalBox.innerHTML='Total: <strong>R'+total+'</strong>';
-    totalBox.style.color='#25D366';
+let box=document.getElementById('cartItems'),sum=0;
+box.innerHTML='';
+cart.forEach((i,n)=>{
+sum+=i.total;
+box.innerHTML+=`<div class="cart-item">
+<strong>${i.name}</strong>
+<span class="remove-item" onclick="cart.splice(${n},1);renderCart()">✖</span><br>
+R${i.total}<br>
+${i.msg && i.message?'Message: '+i.message+'<br>':''}
+${i.tops && i.chosen.length?'Toppings: '+i.chosen.join(', '):''}
+</div>`;
+});
+document.getElementById('cartTotal').innerHTML='Total: R'+sum;
 }
 
-// WhatsApp order with numbered list
 function orderNow(){
-    if(cart.length === 0){
-        alert('Your cart is empty!');
-        return;
-    }
-    let message = 'Hello! I would like to place an order:\n\n';
-    cart.forEach((i,index)=>{
-        message += `${index+1}. ${i.name} - R${i.finalPrice}\n`;
-        if(i.allowMessage && i.message) message += `   Message: ${i.message}\n`;
-        if(i.allowToppings && i.toppings.length) message += `   Toppings: ${i.toppings.join(', ')}\n`;
-    });
-    let total = cart.reduce((sum,i)=>sum+i.finalPrice,0);
-    message += `\nTotal: R${total}`;
-    let url = 'https://wa.me/27689795490?text=' + encodeURIComponent(message);
-    window.open(url,'_blank');
+if(!cart.length)return alert('Cart is empty');
+let msg='Hello, I would like to order:%0A%0A';
+let total=0;
+cart.forEach((i,n)=>{
+total+=i.total;
+msg+=`${n+1}. ${i.name} – R${i.total}%0A`;
+});
+msg+=`%0ATotal: R${total}`;
+window.open('https://wa.me/27689795490?text='+msg,'_blank');
 }
 </script>
 
