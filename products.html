@@ -22,6 +22,12 @@ header{
     align-items:center;
 }
 
+header a{
+    color:#fff;
+    text-decoration:none;
+    font-size:22px;
+}
+
 .cart-icon{
     cursor:pointer;
     position:relative;
@@ -76,7 +82,27 @@ button{
     margin-top:10px;
 }
 
-/* CART PANEL */
+/* TOPPINGS */
+.toppings{
+    margin-top:10px;
+    text-align:left;
+    font-size:14px;
+}
+
+.topping{
+    border:2px solid #ddd;
+    padding:6px;
+    border-radius:10px;
+    margin-bottom:6px;
+    cursor:pointer;
+}
+
+.topping.active{
+    border-color:#25D366;
+    background:#eafff1;
+}
+
+/* CART */
 #cart{
     position:fixed;
     top:0;
@@ -135,7 +161,7 @@ button{
 <body>
 
 <header>
-    <div>Hey babe, are you ready to shop?</div>
+    <a href="index.html">Home</a>
     <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
 </header>
 
@@ -143,63 +169,53 @@ button{
 
 <div class="products">
 
-<!-- Valentine -->
-<div class="card">
-<img src="images/valentine-special1.jpeg">
-<h3>Valentine Brownie</h3>
-<p>R280</p>
-<button onclick="addItem('Valentine Brownie',280,true,false)">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="images/valentine-special2.jpeg">
-<h3>Small Valentine Brownie</h3>
-<p>R120</p>
-<button onclick="addItem('Small Valentine Brownie',120,true,false)">Add to Cart</button>
-</div>
-
-<!-- No options -->
-<div class="card">
-<img src="images/all-in-one.jpeg">
-<h3>All-in-One Brownie</h3>
-<p>R360</p>
-<button onclick="quickAdd('All-in-One Brownie',360)">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="images/specialty-brownie.jpeg">
-<h3>Specialty Brownie</h3>
-<p>Request price</p>
-<button onclick="quickAdd('Specialty Brownie',0)">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="images/fudge.jpeg">
-<h3>Fudge</h3>
-<p>R20</p>
-<button onclick="quickAdd('Fudge',20)">Add to Cart</button>
-</div>
-
-<!-- Toppings -->
+<!-- CUSTOMISED -->
 <div class="card">
 <img src="images/customised.jpeg">
 <h3>Customised Brownie</h3>
 <p>R290</p>
-<button onclick="addItem('Customised Brownie',290,false,true)">Add to Cart</button>
+
+<div class="toppings" data-name="Customised Brownie">
+<strong>Toppings (R20 each – max 2)</strong>
+<div class="topping">Oreos</div>
+<div class="topping">Bar One</div>
+<div class="topping">KitKat</div>
+<div class="topping">Smarties</div>
 </div>
 
+<button onclick="addWithToppings(this,290)">Add to Cart</button>
+</div>
+
+<!-- SMALL CUSTOMISED -->
 <div class="card">
 <img src="images/small-customised.jpeg">
 <h3>Small Customised Brownie</h3>
 <p>R120</p>
-<button onclick="addItem('Small Customised Brownie',120,false,true)">Add to Cart</button>
+
+<div class="toppings" data-name="Small Customised Brownie">
+<strong>Toppings (R20 each – max 2)</strong>
+<div class="topping">Oreos</div>
+<div class="topping">Bar One</div>
+<div class="topping">KitKat</div>
 </div>
 
+<button onclick="addWithToppings(this,120)">Add to Cart</button>
+</div>
+
+<!-- OVERLOAD -->
 <div class="card">
 <img src="images/overload.jpeg">
 <h3>Overload Brownie</h3>
 <p>R320</p>
-<button onclick="addItem('Overload Brownie',320,false,true)">Add to Cart</button>
+
+<div class="toppings" data-name="Overload Brownie">
+<strong>Toppings (R20 each – max 2)</strong>
+<div class="topping">Oreos</div>
+<div class="topping">Ferrero</div>
+<div class="topping">Bar One</div>
+</div>
+
+<button onclick="addWithToppings(this,320)">Add to Cart</button>
 </div>
 
 </div>
@@ -208,7 +224,7 @@ button{
 <div id="cart">
     <div class="cart-header">
         <h3>Your Cart</h3>
-        <span onclick="toggleCart()" style="cursor:pointer;">❌</span>
+        <span onclick="toggleCart()">❌</span>
     </div>
     <div id="cartItems"></div>
     <div class="total" id="cartTotal">Total: R0</div>
@@ -218,61 +234,61 @@ button{
 <script>
 let cart=[];
 
+/* CART */
 function toggleCart(){
     document.getElementById('cart').classList.toggle('open');
 }
 
-function quickAdd(name,price){
-    cart.push({name,price,message:'',toppings:[]});
-    renderCart();
-}
-
-function addItem(name,price,hasMessage,hasToppings){
-    let message='';
-    let toppings=[];
-    let extra=0;
-
-    if(hasMessage){
-        message=prompt("Enter your message:");
-    }
-
-    if(hasToppings){
-        if(confirm("Add topping? R20 each")){
-            toppings.push("Extra topping");
-            extra+=20;
+/* TOPPING SELECTION */
+document.querySelectorAll('.topping').forEach(t=>{
+    t.onclick=()=>{
+        let group=t.parentElement;
+        let active=group.querySelectorAll('.active');
+        if(t.classList.contains('active')){
+            t.classList.remove('active');
+        }else if(active.length<2){
+            t.classList.add('active');
         }
     }
+});
 
-    cart.push({name,price:price+extra,message,toppings});
+/* ADD WITH TOPPINGS */
+function addWithToppings(btn,price){
+    let box=btn.previousElementSibling;
+    let name=box.dataset.name;
+    let chosen=[...box.querySelectorAll('.active')].map(t=>t.innerText);
+    let total=price+(chosen.length*20);
+
+    cart.push({name,price:total,toppings:chosen});
     renderCart();
+
+    box.querySelectorAll('.topping').forEach(t=>t.classList.remove('active'));
 }
 
+/* RENDER CART */
 function renderCart(){
-    let box=document.getElementById('cartItems');
+    let c=document.getElementById('cartItems');
     let total=0;
-    box.innerHTML='';
-
+    c.innerHTML='';
     cart.forEach((i,n)=>{
         total+=i.price;
-        box.innerHTML+=`
+        c.innerHTML+=`
         <div class="cart-item">
         <span class="remove" onclick="cart.splice(${n},1);renderCart()">✖</span>
         <strong>${i.name}</strong><br>
         R${i.price}<br>
-        ${i.message?`Message: ${i.message}<br>`:''}
-        ${i.toppings.length?`Toppings: ${i.toppings.join(', ')}`:''}
+        ${i.toppings.length?'Toppings: '+i.toppings.join(', '):''}
         </div>`;
     });
-
     document.getElementById('cartTotal').innerText='Total: R'+total;
     document.getElementById('cartCount').innerText=cart.length;
 }
 
+/* WHATSAPP */
 function orderNow(){
     let text='Brownie Babe Order:%0A';
     cart.forEach(i=>{
         text+=`${i.name} - R${i.price}%0A`;
-        if(i.message) text+=`Message: ${i.message}%0A`;
         if(i.toppings.length) text+=`Toppings: ${i.toppings.join(', ')}%0A`;
         text+='%0A';
     });
