@@ -6,7 +6,6 @@
 <title>Brownie Babe | Products</title>
 
 <style>
-/* BASE */
 body{
     margin:0;
     font-family:Arial, sans-serif;
@@ -35,17 +34,16 @@ header a{
     font-weight:bold;
 }
 
+/* Cartoonish cart icon */
 .cart-icon{
     cursor:pointer;
     position:relative;
-    font-size:28px;
+    font-size:30px;
     transition: transform 0.2s;
 }
-
 .cart-icon:hover{
-    transform: rotate(15deg);
+    transform: rotate(10deg);
 }
-
 .cart-icon span{
     background:#25D366;
     color:#fff;
@@ -77,17 +75,18 @@ h1{
     padding:15px;
     text-align:center;
     box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    border: 3px solid #4b2e23; /* solid brown border */
     transition: transform 0.2s;
 }
 
 .card:hover{
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .card img{
     width:100%;
     height:180px;
-    object-fit:cover;
+    object-fit:contain; /* full image visible */
     border-radius:15px;
 }
 
@@ -132,7 +131,7 @@ button:hover{
 .modal-box img{
     width:100%;
     height:200px;
-    object-fit:cover;
+    object-fit:contain;
     border-radius:15px;
 }
 
@@ -225,17 +224,17 @@ button:hover{
     padding:12px;
     border-radius:20px;
     font-weight:bold;
+    flex-shrink:0; /* ensures button stays visible */
 }
 </style>
 </head>
-
 <body>
 
 <header>
     <div>Hey babe, are you ready to shop?</div>
     <div class="right-links">
         <a href="index.html">Home</a>
-        <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
+        <div class="cart-icon" onclick="toggleCart()">🛍️ <span id="cartCount">0</span></div>
     </div>
 </header>
 
@@ -281,8 +280,8 @@ document.write(products.map((x,i)=>`
 <!-- CART -->
 <div id="cart">
   <div id="cartHeader">
-    <div style="font-size:28px;">🛒</div> <!-- standing cart icon -->
-    <span onclick="toggleCart()" style="cursor:pointer; font-size:24px;">❌</span> <!-- close button -->
+    <div style="font-size:28px;">🛍️</div>
+    <span onclick="toggleCart()" style="cursor:pointer; font-size:24px;">❌</span>
   </div>
   
   <h3>Your Cart</h3>
