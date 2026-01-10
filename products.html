@@ -6,6 +6,7 @@
 <title>Brownie Babe | Products</title>
 
 <style>
+/* BASE */
 body{
     margin:0;
     font-family:Arial, sans-serif;
@@ -37,6 +38,12 @@ header a{
 .cart-icon{
     cursor:pointer;
     position:relative;
+    font-size:28px;
+    transition: transform 0.2s;
+}
+
+.cart-icon:hover{
+    transform: rotate(15deg);
 }
 
 .cart-icon span{
@@ -70,11 +77,18 @@ h1{
     padding:15px;
     text-align:center;
     box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    border:3px dashed #4b2e23;
+    transition: transform 0.2s;
+}
+
+.card:hover{
+    transform: scale(1.05);
 }
 
 .card img{
     width:100%;
     border-radius:15px;
+    object-fit:cover;
 }
 
 button{
@@ -86,6 +100,12 @@ button{
     cursor:pointer;
     margin-top:10px;
     width:100%;
+    font-family: 'Comic Sans MS', cursive;
+    transition:opacity 0.2s;
+}
+
+button:hover{
+    opacity:0.9;
 }
 
 /* MODAL */
@@ -105,11 +125,13 @@ button{
     max-width:400px;
     border-radius:20px;
     padding:20px;
+    text-align:center;
 }
 
 .modal-box img{
     width:100%;
     border-radius:15px;
+    object-fit:cover;
 }
 
 .close{
@@ -124,11 +146,16 @@ button{
     border-radius:10px;
     margin:6px 0;
     cursor:pointer;
+    transition:background 0.2s, border-color 0.2s;
 }
 
 .topping.active{
     border-color:#25D366;
     background:#eafff1;
+}
+
+.topping:hover{
+    background:#f0f5f0;
 }
 
 /* CART */
@@ -145,9 +172,17 @@ button{
     transition:.3s;
     z-index:1100;
     border-radius:20px 0 0 20px;
+    display:flex;
+    flex-direction:column;
 }
 
 #cart.open{right:0;}
+
+#cartItems{
+    flex-grow:1;
+    overflow-y:auto;
+    margin-top:10px;
+}
 
 .cart-item{
     background:#fff;
@@ -155,6 +190,7 @@ button{
     border-radius:15px;
     margin:10px 0;
     font-size:14px;
+    text-align:left;
 }
 
 .remove{
@@ -173,6 +209,11 @@ button{
     background:#25D366;
     width:100%;
     margin-top:10px;
+    cursor:pointer;
+    border:none;
+    padding:12px;
+    border-radius:20px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -192,14 +233,14 @@ button{
 <div class="products">
 <script>
 const products=[
-{n:'Valentine Brownie',p:280,i:'valentine-special1.jpeg',m:true,t:false},
-{n:'Small Valentine Brownie',p:120,i:'valentine-special2.jpeg',m:true,t:false},
-{n:'All-in-One Brownie',p:360,i:'all-in-one.jpeg'},
-{n:'Customised Brownie',p:290,i:'customised.jpeg',m:true,t:true},
-{n:'Small Customised Brownie',p:120,i:'small-customised.jpeg',m:true,t:true},
-{n:'Overload Brownie',p:320,i:'overload.jpeg',m:true,t:true},
-{n:'Specialty Brownie',p:0,i:'specialty-brownie.jpeg'},
-{n:'Fudge',p:20,i:'fudge.jpeg'}
+{n:'Valentine Brownie',p:280,i:'images/valentine-special1.jpeg',m:true,t:false},
+{n:'Small Valentine Brownie',p:120,i:'images/valentine-special2.jpeg',m:true,t:false},
+{n:'All-in-One Brownie',p:360,i:'images/all-in-one.jpeg'},
+{n:'Customised Brownie',p:290,i:'images/customised.jpeg',m:true,t:true},
+{n:'Small Customised Brownie',p:120,i:'images/small-customised.jpeg',m:true,t:true},
+{n:'Overload Brownie',p:320,i:'images/overload.jpeg',m:true,t:true},
+{n:'Specialty Brownie',p:0,i:'images/specialty-brownie.jpeg'},
+{n:'Fudge',p:20,i:'images/fudge.jpeg'}
 ];
 
 document.write(products.map((x,i)=>`
@@ -218,8 +259,10 @@ document.write(products.map((x,i)=>`
 <span class="close" onclick="closeModal()">❌</span>
 <h3 id="mName"></h3>
 <img id="mImg">
-<div id="msgBox"></div>
-<div id="topBox"></div>
+
+<div id="msgBox" style="margin:10px 0;"></div>
+<div id="topBox" style="margin-top:10px;"></div>
+
 <button onclick="confirmAdd()">Add to Cart</button>
 </div>
 </div>
@@ -241,8 +284,19 @@ function openModal(i){
 current={...products[i],tops:[],msg:''};
 document.getElementById('mName').innerText=current.n;
 document.getElementById('mImg').src=current.i;
-document.getElementById('msgBox').innerHTML=current.m?`<textarea placeholder="Write your message" oninput="current.msg=this.value"></textarea>`:'';
-document.getElementById('topBox').innerHTML=current.t?['Oreos','Bar One','KitKat','Smarties'].map(t=>`<div class="topping" onclick="toggleTop(this,'${t}')">${t} (+R20)</div>`).join(''):'';
+
+// Message box
+document.getElementById('msgBox').innerHTML = current.m
+  ? `<label style="display:block; font-weight:bold; color:#4b2e23; margin-bottom:5px;">💌 Add a personal message (optional)</label>
+     <textarea placeholder="Write your message..." style="width:100%; padding:10px; border:2px dashed #4b2e23; border-radius:15px;" oninput="current.msg=this.value"></textarea>`
+  : '';
+
+// Toppings
+document.getElementById('topBox').innerHTML = current.t
+  ? ['Chocolate Variety','Biscoff','Oreos','Tex Chocolate','Kit Kat','M&M’s','Bueno (Kinder Joy)']
+      .map(t=>`<div class="topping" onclick="toggleTop(this,'${t}')">${t} (+R20)</div>`).join('')
+  : '';
+
 document.getElementById('modal').style.display='flex';
 }
 
@@ -250,7 +304,7 @@ function toggleTop(el,t){
 if(el.classList.contains('active')){
 el.classList.remove('active');
 current.tops=current.tops.filter(x=>x!=t);
-}else if(current.tops.length<2){
+}else{
 el.classList.add('active');
 current.tops.push(t);
 }
@@ -284,6 +338,7 @@ document.getElementById('cartCount').innerText=cart.length;
 }
 
 function order(){
+if(cart.length===0){alert("Your cart is empty!"); return;}
 let txt='Brownie Babe Order:%0A';
 cart.forEach(i=>{
 txt+=`${i.n} - R${i.total}%0A`;
@@ -292,6 +347,11 @@ if(i.tops.length) txt+=`Toppings: ${i.tops.join(', ')}%0A`;
 txt+='%0A';
 });
 window.open(`https://wa.me/27689795490?text=${txt}`);
+}
+
+// Close modal by clicking outside
+window.onclick = function(e){
+    if(e.target.id=='modal') closeModal();
 }
 </script>
 
