@@ -5,45 +5,40 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<title>Brownie Babe</title>
+<title>Brownie Babe Shop</title>
 
 <style>
 body{
     margin:0;
     font-family:Arial, sans-serif;
-    background:#f6efe7;
+    background:#f6f2ea;
 }
 
 /* HEADER */
-.header{
-    background:#000;
+header{
+    background:#3e2616;
     color:#fff;
     padding:15px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
-.cart-btn{
-    position:relative;
-    font-size:22px;
+
+.cart-icon{
     cursor:pointer;
-}
-.cart-count{
-    position:absolute;
-    top:-8px;
-    right:-8px;
-    background:#25D366;
-    color:#fff;
-    font-size:12px;
-    padding:3px 6px;
-    border-radius:50%;
+    font-size:22px;
 }
 
-/* TITLE */
-h2{
-    text-align:center;
-    color:#5a3a1e;
-    margin:20px 0 10px;
+/* SEARCH */
+.search-box{
+    padding:15px;
+}
+.search-box input{
+    width:100%;
+    padding:12px;
+    border-radius:25px;
+    border:2px solid #5a3a1e;
+    font-size:16px;
 }
 
 /* PRODUCTS */
@@ -55,11 +50,14 @@ h2{
 }
 
 .card{
-    background:#f3ece4;
+    background:#f6f2ea;
+    border:3px solid #5a3a1e;
     border-radius:20px;
-    padding:12px;
+    padding:10px;
     text-align:center;
+    transition:.2s;
 }
+.card:active{ transform:scale(.97); }
 
 .card img{
     width:100%;
@@ -69,22 +67,17 @@ h2{
 }
 
 .card h4{
-    margin:10px 0 5px;
-    color:#5a3a1e;
-}
-
-.price{
-    font-weight:bold;
-    margin-bottom:8px;
+    margin:8px 0 4px;
+    color:#3e2616;
 }
 
 .card button{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:20px;
     background:#5a3a1e;
     color:#fff;
+    border:none;
+    padding:10px;
+    width:100%;
+    border-radius:20px;
     font-weight:bold;
 }
 
@@ -96,20 +89,21 @@ h2{
     width:85%;
     max-width:360px;
     height:100%;
-    background:#f9f4ee;
+    background:#f6f2ea;
     box-shadow:-5px 0 15px rgba(0,0,0,.3);
-    transition:.3s;
     z-index:1000;
+    transition:.3s;
     display:flex;
     flex-direction:column;
 }
 #cart.open{ right:0; }
 
-#cartHeader{
+.cart-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:15px;
+    font-size:22px;
 }
 
 #cartItems{
@@ -118,9 +112,17 @@ h2{
     padding:0 15px;
 }
 
+.cart-item{
+    background:#fff;
+    padding:10px;
+    border-radius:12px;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
 .cart-footer{
     padding:15px;
-    border-top:1px solid #ddd;
+    border-top:1px solid #ccc;
 }
 
 .total{
@@ -130,108 +132,127 @@ h2{
 }
 
 .order-btn{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:25px;
     background:#25D366;
+    border:none;
+    padding:14px;
+    width:100%;
+    border-radius:25px;
     color:#fff;
     font-weight:bold;
 }
 
-/* OVERLAY */
-#overlay{
+/* TOAST */
+#toast{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.4);
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#5a3a1e;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:20px;
     display:none;
-    z-index:900;
 }
-#overlay.show{ display:block; }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <div>Hey babe, are you ready to shop?</div>
-    <div class="cart-btn" onclick="toggleCart()">🛍
-        <div class="cart-count" id="count">0</div>
-    </div>
+<header>
+    <div>Brownie Babe 🍫</div>
+    <div class="cart-icon" onclick="toggleCart()">👜</div>
+</header>
+
+<div class="search-box">
+    <input type="text" id="search" placeholder="Search brownies..." oninput="searchProducts()">
 </div>
 
-<h2>Our Brownies</h2>
+<div class="products" id="productList"></div>
 
-<div class="products">
-    <div class="card">
-        <img src="valentine-special1.jpeg">
-        <h4>Valentine Brownie</h4>
-        <div class="price">R280</div>
-        <button onclick="addToCart('Valentine Brownie',280)">Add to Cart</button>
-    </div>
-
-    <div class="card">
-        <img src="valentine-special2.jpeg">
-        <h4>Small Valentine Brownie</h4>
-        <div class="price">R120</div>
-        <button onclick="addToCart('Small Valentine Brownie',120)">Add to Cart</button>
-    </div>
-
-    <div class="card">
-        <img src="all-in-one.jpeg">
-        <h4>All-in-One Brownie</h4>
-        <div class="price">R360</div>
-        <button onclick="addToCart('All-in-One Brownie',360)">Add to Cart</button>
-    </div>
-
-    <div class="card">
-        <img src="customised.jpeg">
-        <h4>Customised Brownie</h4>
-        <div class="price">R290</div>
-        <button onclick="addToCart('Customised Brownie',290)">Add to Cart</button>
-    </div>
-</div>
-
-<div id="overlay" onclick="toggleCart()"></div>
-
+<!-- CART -->
 <div id="cart">
-    <div id="cartHeader">
-        <strong>Your Cart</strong>
-        <span onclick="toggleCart()" style="font-size:22px;cursor:pointer;">✖</span>
+    <div class="cart-header">
+        <span>👜</span>
+        <span onclick="toggleCart()">✖</span>
     </div>
 
     <div id="cartItems"></div>
 
     <div class="cart-footer">
         <div class="total" id="total">Total: R0</div>
-        <button class="order-btn">Order Now</button>
+        <button class="order-btn" onclick="order()">Order Now</button>
     </div>
 </div>
 
-<script>
-let cart=[];
-let total=0;
+<div id="toast">Added to cart</div>
 
-function toggleCart(){
-    document.getElementById('cart').classList.toggle('open');
-    document.getElementById('overlay').classList.toggle('show');
+<script>
+const products = [
+ {n:'Valentine Brownie',p:280,i:'images/valentine-special1.jpeg'},
+ {n:'Small Valentine Brownie',p:120,i:'images/valentine-special2.jpeg'},
+ {n:'All-in-One Brownie',p:360,i:'images/all-in-one.jpeg'},
+ {n:'Customised Brownie',p:290,i:'images/customised.jpeg'},
+ {n:'Small Customised Brownie',p:120,i:'images/small-customised.jpeg'},
+ {n:'Overload Brownie',p:320,i:'images/overload.jpeg'},
+ {n:'Specialty Brownie',p:0,i:'images/specialty-brownie.jpeg'},
+ {n:'Fudge',p:20,i:'images/fudge.jpeg'}
+];
+
+let cart = [];
+
+function renderProducts(list){
+    const box = document.getElementById('productList');
+    box.innerHTML = '';
+    list.forEach((x)=>{
+        box.innerHTML += `
+        <div class="card">
+            <img src="${x.i}" alt="${x.n}">
+            <h4>${x.n}</h4>
+            <p>${x.p ? 'R'+x.p : 'Request price'}</p>
+            <button onclick="addToCart('${x.n}',${x.p||0})">Add to Cart</button>
+        </div>`;
+    });
+}
+
+function searchProducts(){
+    const val = document.getElementById('search').value.toLowerCase();
+    renderProducts(products.filter(p=>p.n.toLowerCase().includes(val)));
 }
 
 function addToCart(name,price){
     cart.push({name,price});
-    total+=price;
-
-    document.getElementById('cartItems').innerHTML +=
-        `<p>${name} - R${price}</p>`;
-
-    document.getElementById('total').innerText = "Total: R"+total;
-    document.getElementById('count').innerText = cart.length;
-
-    toggleCart();
+    renderCart();
+    showToast();
 }
+
+function renderCart(){
+    let total = 0;
+    const box = document.getElementById('cartItems');
+    box.innerHTML = '';
+    cart.forEach(i=>{
+        total += i.price;
+        box.innerHTML += `<div class="cart-item">${i.name} - R${i.price}</div>`;
+    });
+    document.getElementById('total').innerText = 'Total: R'+total;
+}
+
+function toggleCart(){
+    document.getElementById('cart').classList.toggle('open');
+}
+
+function showToast(){
+    const t = document.getElementById('toast');
+    t.style.display='block';
+    setTimeout(()=>t.style.display='none',1500);
+}
+
+function order(){
+    let msg='Brownie Babe Order:%0A';
+    cart.forEach(i=>msg+=`${i.name} - R${i.price}%0A`);
+    window.open(`https://wa.me/27689795490?text=${msg}`);
+}
+
+renderProducts(products);
 </script>
 
 </body>
