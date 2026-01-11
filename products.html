@@ -32,12 +32,14 @@ body{
     margin:0;
 }
 .header a{
-    color:#F8F5F0;
     text-decoration:none;
     margin-left:20px;
-    font-size:20px;
     font-weight:bold;
+    font-size:24px;
+    transition: transform 0.2s;
 }
+.header a:hover{transform: scale(1.2);}
+.header .cart-icon{color:#fff; font-size:28px; cursor:pointer;}
 
 /* TITLE */
 .page-title{
@@ -81,7 +83,8 @@ body{
     margin:10px 0 8px;
 }
 .product p{
-    font-weight:600;
+    font-weight:700;
+    font-size:18px;
     margin-bottom:15px;
 }
 
@@ -89,8 +92,8 @@ body{
 .order-btn-product{
     width:100%;
     padding:14px;
-    background:#4B3932;
-    color:#F8F5F0;
+    background:#8B4513; /* brown */
+    color:#fff;
     border:none;
     font-weight:bold;
     border-radius:15px;
@@ -159,6 +162,25 @@ body{
     transform: scale(1.1);
 }
 
+/* ADD TO CART BUTTON IN MODAL */
+.add-cart-btn{
+    width:100%;
+    padding:14px;
+    background:#8B4513; /* brown */
+    color:#fff;
+    font-weight:bold;
+    border:none;
+    border-radius:15px;
+    font-size:16px;
+    margin-top:15px;
+    cursor:pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.add-cart-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
 /* CART */
 #cart{
     position:fixed;
@@ -210,7 +232,7 @@ body{
 .cart-total{
     font-weight:bold;
     margin-top:20px;
-    font-size:18px;
+    font-size:20px; /* bigger price */
     border-top:2px solid #4B3932;
     padding-top:12px;
     color:#25D366;
@@ -270,6 +292,10 @@ body{
         font-size:15px;
         padding:12px;
     }
+    .add-cart-btn{
+        font-size:15px;
+        padding:12px;
+    }
     .page-title{
         font-size:30px;
     }
@@ -287,7 +313,7 @@ body{
     <h1>Hey babe, are you ready to shop?</h1>
     <div>
         <a href="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="toggleCart()">🛒</a>
+        <a class="cart-icon" href="javascript:void(0)" onclick="toggleCart()">🛒</a>
     </div>
 </div>
 
