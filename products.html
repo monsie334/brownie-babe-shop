@@ -14,89 +14,93 @@ body{
     color:#4B3932;
 }
 
-/* HEADER */
+/* HEADER / BANNER */
 .header{
     background:#000;
     color:#F8F5F0;
-    padding:15px 8%;
+    padding:25px 8%;
     display:flex;
     justify-content:space-between;
     align-items:center;
     flex-wrap:wrap;
+    border-bottom:4px solid #25D366;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 .header h1{
     font-family:'Archivo Black',sans-serif;
-    font-size:22px;
+    font-size:28px;
     margin:0;
 }
 .header a{
     color:#F8F5F0;
     text-decoration:none;
-    margin-left:15px;
-    font-size:18px;
+    margin-left:20px;
+    font-size:20px;
+    font-weight:bold;
 }
 
 /* TITLE */
 .page-title{
     text-align:center;
     font-family:'Archivo Black',sans-serif;
-    font-size:36px;
-    margin:40px 0 20px;
+    font-size:42px;
+    margin:50px 0 30px;
 }
 
 /* PRODUCTS GRID */
 .products{
     padding:0 8% 60px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:35px;
+    grid-template-columns:repeat(2,1fr);
+    gap:50px;
 }
 
 /* PRODUCT */
 .product{
     text-align:center;
     background:#FFFFFF;
-    padding:20px;
-    border-radius:20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    padding:25px;
+    border-radius:25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 .product:hover{
     transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
 }
 .product img{
     width:100%;
-    height:280px;
+    height:350px;
     object-fit:contain;
-    border-radius:15px;
-    margin-bottom:15px;
+    border-radius:20px;
+    margin-bottom:20px;
 }
 .product h3{
     font-family:'Archivo Black',sans-serif;
-    font-size:18px;
-    margin:10px 0 5px;
+    font-size:20px;
+    margin:10px 0 8px;
 }
 .product p{
     font-weight:600;
-    margin-bottom:12px;
+    margin-bottom:15px;
 }
 
 /* ORDER NOW BUTTON */
 .order-btn-product{
     width:100%;
-    padding:12px;
+    padding:14px;
     background:#4B3932;
     color:#F8F5F0;
     border:none;
     font-weight:bold;
-    border-radius:12px;
+    border-radius:15px;
     cursor:pointer;
+    font-size:16px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .order-btn-product:hover{
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
 /* MODAL */
@@ -104,7 +108,7 @@ body{
     display:none;
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.6);
+    background:rgba(0,0,0,0.7);
     justify-content:center;
     align-items:center;
     z-index:1000;
@@ -117,35 +121,35 @@ body{
 .modal-box{
     background:#FFFFFF;
     width:90%;
-    max-width:420px;
-    padding:25px;
-    border-radius:20px;
+    max-width:480px;
+    padding:30px;
+    border-radius:25px;
     position:relative;
     max-height:90vh;
     overflow-y:auto;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.3);
 }
 .close{
     position:absolute;
-    top:10px;
-    right:15px;
+    top:15px;
+    right:20px;
     cursor:pointer;
-    font-size:22px;
+    font-size:24px;
 }
 
 /* TOPPINGS */
 .toppings{
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
-    margin-top:8px;
+    gap:10px;
+    margin-top:10px;
 }
 .topping{
     border:1px solid #4B3932;
-    padding:6px 12px;
-    border-radius:12px;
+    padding:8px 14px;
+    border-radius:15px;
     cursor:pointer;
-    font-size:13px;
+    font-size:14px;
     transition: transform 0.2s, background 0.2s, color 0.2s;
 }
 .topping:hover{transform: scale(1.1);}
@@ -160,15 +164,15 @@ body{
     position:fixed;
     top:0;
     right:-100%;
-    width:350px;
+    width:380px;
     height:100%;
-    background:#FFFFFF;
-    padding:20px;
+    background: linear-gradient(180deg,#F8F5F0,#FFFFFF);
+    padding:25px;
     transition:.4s ease;
     z-index:1200;
     overflow-y:auto;
-    box-shadow:-6px 0 20px rgba(0,0,0,0.2);
-    border-radius:20px 0 0 20px;
+    box-shadow:-8px 0 25px rgba(0,0,0,0.25);
+    border-radius:25px 0 0 25px;
 }
 #cart.open{right:0;}
 .cart-header{
@@ -176,60 +180,67 @@ body{
     justify-content:space-between;
     align-items:center;
     font-family:'Archivo Black';
-    margin-bottom:20px;
-    font-size:18px;
+    margin-bottom:25px;
+    font-size:20px;
+    color:#4B3932;
 }
 .cart-item{
-    margin:12px 0;
-    font-size:14px;
+    margin:15px 0;
+    font-size:15px;
     border-bottom:1px solid #4B3932;
-    padding-bottom:10px;
+    padding-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 .cart-item img{
-    width:50px;
-    display:block;
-    border-radius:8px;
+    width:60px;
+    height:60px;
+    object-fit:contain;
+    border-radius:15px;
+    border:1px solid #4B3932;
 }
 .remove-item{
     cursor:pointer;
     color:red;
     font-weight:bold;
-    margin-left:10px;
-    font-size:14px;
+    margin-left:auto;
+    font-size:16px;
 }
 .cart-total{
     font-weight:bold;
-    margin-top:15px;
-    font-size:16px;
-    border-top:1px solid #4B3932;
-    padding-top:10px;
+    margin-top:20px;
+    font-size:18px;
+    border-top:2px solid #4B3932;
+    padding-top:12px;
     color:#25D366;
 }
 .order-btn{
-    margin-top:15px;
+    margin-top:20px;
     width:100%;
-    padding:12px;
+    padding:14px;
     background:#25D366;
     color:white;
     border:none;
     cursor:pointer;
     font-weight:bold;
-    border-radius:12px;
+    border-radius:18px;
+    font-size:18px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .order-btn:hover{
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
 /* RESPONSIVE GRID */
 @media screen and (max-width:1024px){
     .products{
-        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-        gap:30px;
+        grid-template-columns:repeat(2,1fr);
+        gap:40px;
     }
     .product img{
-        height:260px;
+        height:320px;
     }
 }
 
@@ -237,32 +248,33 @@ body{
     .products{
         grid-template-columns:1fr;
         padding:0 5%;
+        gap:35px;
     }
     .product img{
-        height:250px;
+        height:300px;
     }
     .page-title{
-        font-size:30px;
+        font-size:36px;
     }
     .header h1{
-        font-size:20px;
+        font-size:24px;
         margin-bottom:10px;
     }
 }
 
 @media screen and (max-width:480px){
     .product img{
-        height:220px;
+        height:250px;
     }
     .order-btn-product{
-        font-size:14px;
-        padding:10px;
+        font-size:15px;
+        padding:12px;
     }
     .page-title{
-        font-size:26px;
+        font-size:30px;
     }
     .header h1{
-        font-size:18px;
+        font-size:20px;
     }
 }
 </style>
