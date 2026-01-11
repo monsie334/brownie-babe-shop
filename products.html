@@ -9,19 +9,20 @@
 <style>
 body{
     margin:0;
-    background:#F8F5F0; /* light beige */
+    background:#F8F5F0;
     font-family:'Archivo',sans-serif;
     color:#4B3932;
 }
 
 /* HEADER */
 .header{
-    background:#000; /* black banner */
+    background:#000;
     color:#F8F5F0;
     padding:15px 8%;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    flex-wrap:wrap;
 }
 .header h1{
     font-family:'Archivo Black',sans-serif;
@@ -47,37 +48,55 @@ body{
 .products{
     padding:0 8% 60px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:30px;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:35px;
 }
 
 /* PRODUCT */
 .product{
     text-align:center;
-    cursor:pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-    background:#FFFFFF; /* white product block */
-    padding:15px;
+    background:#FFFFFF;
+    padding:20px;
     border-radius:20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 .product:hover{
-    transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 .product img{
     width:100%;
-    height:220px;
+    height:280px;
     object-fit:contain;
     border-radius:15px;
+    margin-bottom:15px;
 }
 .product h3{
     font-family:'Archivo Black',sans-serif;
-    font-size:16px;
+    font-size:18px;
     margin:10px 0 5px;
 }
 .product p{
     font-weight:600;
+    margin-bottom:12px;
+}
+
+/* ORDER NOW BUTTON */
+.order-btn-product{
+    width:100%;
+    padding:12px;
+    background:#4B3932;
+    color:#F8F5F0;
+    border:none;
+    font-weight:bold;
+    border-radius:12px;
+    cursor:pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.order-btn-product:hover{
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 /* MODAL */
@@ -96,7 +115,7 @@ body{
     to{opacity:1;}
 }
 .modal-box{
-    background:#FFFFFF; /* white modal */
+    background:#FFFFFF;
     width:90%;
     max-width:420px;
     padding:25px;
@@ -184,7 +203,7 @@ body{
     font-size:16px;
     border-top:1px solid #4B3932;
     padding-top:10px;
-    color:#25D366; /* green */
+    color:#25D366;
 }
 .order-btn{
     margin-top:15px;
@@ -202,21 +221,49 @@ body{
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-.add-cart-btn{
-    margin-top:15px;
-    width:100%;
-    padding:12px;
-    background:#4B3932;
-    color:#F8F5F0;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-    border-radius:12px;
-    transition: transform 0.2s, box-shadow 0.2s;
+
+/* RESPONSIVE GRID */
+@media screen and (max-width:1024px){
+    .products{
+        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+        gap:30px;
+    }
+    .product img{
+        height:260px;
+    }
 }
-.add-cart-btn:hover{
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+@media screen and (max-width:768px){
+    .products{
+        grid-template-columns:1fr;
+        padding:0 5%;
+    }
+    .product img{
+        height:250px;
+    }
+    .page-title{
+        font-size:30px;
+    }
+    .header h1{
+        font-size:20px;
+        margin-bottom:10px;
+    }
+}
+
+@media screen and (max-width:480px){
+    .product img{
+        height:220px;
+    }
+    .order-btn-product{
+        font-size:14px;
+        padding:10px;
+    }
+    .page-title{
+        font-size:26px;
+    }
+    .header h1{
+        font-size:18px;
+    }
 }
 </style>
 </head>
@@ -237,52 +284,60 @@ body{
 <!-- PRODUCTS -->
 <div class="products">
 
-<div class="product" onclick="openModal('Valentine Brownie',280,'images/valentine-special1.jpeg',true,false,true)">
-<img src="images/valentine-special1.jpeg">
-<h3>Valentine Brownie</h3>
-<p>R280</p>
+<div class="product">
+    <img src="images/valentine-special1.jpeg">
+    <h3>Valentine Brownie</h3>
+    <p>R280</p>
+    <button class="order-btn-product" onclick="openModal('Valentine Brownie',280,'images/valentine-special1.jpeg',true,false,true)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('Small Valentine Brownie',120,'images/valentine-special2.jpeg',true,false,true)">
-<img src="images/valentine-special2.jpeg">
-<h3>Small Valentine Brownie</h3>
-<p>R120</p>
+<div class="product">
+    <img src="images/valentine-special2.jpeg">
+    <h3>Small Valentine Brownie</h3>
+    <p>R120</p>
+    <button class="order-btn-product" onclick="openModal('Small Valentine Brownie',120,'images/valentine-special2.jpeg',true,false,true)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('All-in-One Brownie',360,'images/all-in-one.jpeg',false,false,false)">
-<img src="images/all-in-one.jpeg">
-<h3>All-in-One Brownie</h3>
-<p>R360</p>
+<div class="product">
+    <img src="images/all-in-one.jpeg">
+    <h3>All-in-One Brownie</h3>
+    <p>R360</p>
+    <button class="order-btn-product" onclick="openModal('All-in-One Brownie',360,'images/all-in-one.jpeg',false,false,false)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('Customised Brownie',290,'images/customised.jpeg',true,true,false)">
-<img src="images/customised.jpeg">
-<h3>Customised Brownie</h3>
-<p>R290</p>
+<div class="product">
+    <img src="images/customised.jpeg">
+    <h3>Customised Brownie</h3>
+    <p>R290</p>
+    <button class="order-btn-product" onclick="openModal('Customised Brownie',290,'images/customised.jpeg',true,true,false)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('Small Customised Brownie',120,'images/small-customised.jpeg',true,true,false)">
-<img src="images/small-customised.jpeg">
-<h3>Small Customised Brownie</h3>
-<p>R120</p>
+<div class="product">
+    <img src="images/small-customised.jpeg">
+    <h3>Small Customised Brownie</h3>
+    <p>R120</p>
+    <button class="order-btn-product" onclick="openModal('Small Customised Brownie',120,'images/small-customised.jpeg',true,true,false)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('Overload Brownie',320,'images/overload.jpeg',true,true,false)">
-<img src="images/overload.jpeg">
-<h3>Overload Brownie</h3>
-<p>R320</p>
+<div class="product">
+    <img src="images/overload.jpeg">
+    <h3>Overload Brownie</h3>
+    <p>R320</p>
+    <button class="order-btn-product" onclick="openModal('Overload Brownie',320,'images/overload.jpeg',true,true,false)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('Specialty Brownie',0,'images/specialty-brownie.jpeg',false,false,false)">
-<img src="images/specialty-brownie.jpeg">
-<h3>Specialty Brownie</h3>
-<p>Request a price</p>
+<div class="product">
+    <img src="images/specialty-brownie.jpeg">
+    <h3>Specialty Brownie</h3>
+    <p>Request a price</p>
+    <button class="order-btn-product" onclick="openModal('Specialty Brownie',0,'images/specialty-brownie.jpeg',false,false,false)">Order Now</button>
 </div>
 
-<div class="product" onclick="openModal('Fudge',20,'images/fudge.jpeg',false,false,false)">
-<img src="images/fudge.jpeg">
-<h3>Fudge</h3>
-<p>R20</p>
+<div class="product">
+    <img src="images/fudge.jpeg">
+    <h3>Fudge</h3>
+    <p>R20</p>
+    <button class="order-btn-product" onclick="openModal('Fudge',20,'images/fudge.jpeg',false,false,false)">Order Now</button>
 </div>
 
 </div>
@@ -292,15 +347,13 @@ body{
 <div class="modal-box">
 <span class="close" onclick="closeModal()">✖</span>
 <h3 id="modalTitle"></h3>
-<img id="modalImg" style="width:100%;height:200px;object-fit:contain;border-radius:12px;">
+<img id="modalImg" style="width:100%;height:220px;object-fit:contain;border-radius:12px;">
 
-<!-- Message section -->
 <div id="messageSection">
 <label>Message</label>
 <textarea id="message" style="width:100%;padding:8px;border:1px solid #4B3932;border-radius:10px;"></textarea>
 </div>
 
-<!-- Toppings section -->
 <div id="toppingsSection">
 <label>Toppings (R20 each, choose multiple)</label>
 <div style="font-size:12px;color:#4B3932;margin-bottom:5px;">Each topping costs R20</div>
@@ -337,9 +390,7 @@ function openModal(name,price,img,allowMessage,allowToppings,messageOnly=false){
     if(allowMessage){
         messageSection.style.display='block';
         document.getElementById('message').value='';
-    } else {
-        messageSection.style.display='none';
-    }
+    } else { messageSection.style.display='none'; }
 
     const toppingsSection=document.getElementById('toppingsSection');
     const box=document.getElementById('toppingsBox');
@@ -358,9 +409,7 @@ function openModal(name,price,img,allowMessage,allowToppings,messageOnly=false){
             };
             box.appendChild(d);
         });
-    } else {
-        toppingsSection.style.display='none';
-    }
+    } else { toppingsSection.style.display='none'; }
 
     document.getElementById('modal').style.display='flex';
 }
@@ -368,13 +417,9 @@ function openModal(name,price,img,allowMessage,allowToppings,messageOnly=false){
 function closeModal(){document.getElementById('modal').style.display='none';}
 
 function addToCart(){
-    if(current.allowMessage){
-        current.message=document.getElementById('message').value;
-    }
+    if(current.allowMessage) current.message=document.getElementById('message').value;
     let finalPrice=current.price;
-    if(current.allowToppings){
-        finalPrice += current.toppings.length * 20;
-    }
+    if(current.allowToppings) finalPrice += current.toppings.length * 20;
     cart.push({...current,finalPrice});
     closeModal();
     toggleCart();
@@ -412,10 +457,7 @@ function renderCart(){
 }
 
 function orderNow(){
-    if(cart.length === 0){
-        alert('Your cart is empty!');
-        return;
-    }
+    if(cart.length === 0){alert('Your cart is empty!'); return;}
     let message = 'Hello! I would like to place an order:\n\n';
     cart.forEach((i,index)=>{
         message += `${index+1}. ${i.name} - R${i.finalPrice}\n`;
