@@ -2,83 +2,138 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Our Brownies – Brownie Babe</title>
 
-<title>Brownie Babe Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Archivo+Black&display=swap" rel="stylesheet">
 
 <style>
 body{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#f6f2ea;
+    background:#F8F5F0; /* light beige */
+    font-family:'Archivo',sans-serif;
+    color:#4B3932;
 }
 
 /* HEADER */
-header{
-    background:#3e2616;
-    color:#fff;
-    padding:15px;
+.header{
+    background:#000; /* black banner */
+    color:#F8F5F0;
+    padding:15px 8%;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
+.header h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:22px;
+    margin:0;
+}
+.header a{
+    color:#F8F5F0;
+    text-decoration:none;
+    margin-left:15px;
+    font-size:18px;
+}
 
-.cart-icon{
+/* TITLE */
+.page-title{
+    text-align:center;
+    font-family:'Archivo Black',sans-serif;
+    font-size:36px;
+    margin:40px 0 20px;
+}
+
+/* PRODUCTS GRID */
+.products{
+    padding:0 8% 60px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+}
+
+/* PRODUCT */
+.product{
+    text-align:center;
+    cursor:pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background:#FFFFFF; /* white product block */
+    padding:15px;
+    border-radius:20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.product:hover{
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.product img{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+    border-radius:15px;
+}
+.product h3{
+    font-family:'Archivo Black',sans-serif;
+    font-size:16px;
+    margin:10px 0 5px;
+}
+.product p{
+    font-weight:600;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+    animation: fadeIn 0.3s;
+}
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+.modal-box{
+    background:#FFFFFF; /* white modal */
+    width:90%;
+    max-width:420px;
+    padding:25px;
+    border-radius:20px;
+    position:relative;
+    max-height:90vh;
+    overflow-y:auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+.close{
+    position:absolute;
+    top:10px;
+    right:15px;
     cursor:pointer;
     font-size:22px;
 }
 
-/* SEARCH */
-.search-box{
-    padding:15px;
+/* TOPPINGS */
+.toppings{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:8px;
 }
-.search-box input{
-    width:100%;
-    padding:12px;
-    border-radius:25px;
-    border:2px solid #5a3a1e;
-    font-size:16px;
+.topping{
+    border:1px solid #4B3932;
+    padding:6px 12px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:13px;
+    transition: transform 0.2s, background 0.2s, color 0.2s;
 }
-
-/* PRODUCTS */
-.products{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-    padding:15px;
-}
-
-.card{
-    background:#f6f2ea;
-    border:3px solid #5a3a1e;
-    border-radius:20px;
-    padding:10px;
-    text-align:center;
-    transition:.2s;
-}
-.card:active{ transform:scale(.97); }
-
-.card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
-    border-radius:15px;
-}
-
-.card h4{
-    margin:8px 0 4px;
-    color:#3e2616;
-}
-
-.card button{
-    background:#5a3a1e;
-    color:#fff;
-    border:none;
-    padding:10px;
-    width:100%;
-    border-radius:20px;
-    font-weight:bold;
+.topping:hover{transform: scale(1.1);}
+.topping.active{
+    background:#4B3932;
+    color:#F8F5F0;
+    transform: scale(1.1);
 }
 
 /* CART */
@@ -86,173 +141,292 @@ header{
     position:fixed;
     top:0;
     right:-100%;
-    width:85%;
-    max-width:360px;
+    width:350px;
     height:100%;
-    background:#f6f2ea;
-    box-shadow:-5px 0 15px rgba(0,0,0,.3);
-    z-index:1000;
-    transition:.3s;
-    display:flex;
-    flex-direction:column;
+    background:#FFFFFF;
+    padding:20px;
+    transition:.4s ease;
+    z-index:1200;
+    overflow-y:auto;
+    box-shadow:-6px 0 20px rgba(0,0,0,0.2);
+    border-radius:20px 0 0 20px;
 }
-#cart.open{ right:0; }
-
+#cart.open{right:0;}
 .cart-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:15px;
-    font-size:22px;
+    font-family:'Archivo Black';
+    margin-bottom:20px;
+    font-size:18px;
 }
-
-#cartItems{
-    flex:1;
-    overflow-y:auto;
-    padding:0 15px;
-}
-
 .cart-item{
-    background:#fff;
-    padding:10px;
-    border-radius:12px;
-    margin-bottom:10px;
+    margin:12px 0;
+    font-size:14px;
+    border-bottom:1px solid #4B3932;
+    padding-bottom:10px;
+}
+.cart-item img{
+    width:50px;
+    display:block;
+    border-radius:8px;
+}
+.remove-item{
+    cursor:pointer;
+    color:red;
+    font-weight:bold;
+    margin-left:10px;
     font-size:14px;
 }
-
-.cart-footer{
-    padding:15px;
-    border-top:1px solid #ccc;
-}
-
-.total{
+.cart-total{
     font-weight:bold;
-    color:#25D366;
-    margin-bottom:8px;
+    margin-top:15px;
+    font-size:16px;
+    border-top:1px solid #4B3932;
+    padding-top:10px;
+    color:#25D366; /* green */
 }
-
 .order-btn{
-    background:#25D366;
-    border:none;
-    padding:14px;
+    margin-top:15px;
     width:100%;
-    border-radius:25px;
-    color:#fff;
+    padding:12px;
+    background:#25D366;
+    color:white;
+    border:none;
+    cursor:pointer;
     font-weight:bold;
+    border-radius:12px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-
-/* TOAST */
-#toast{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#5a3a1e;
-    color:#fff;
-    padding:10px 18px;
-    border-radius:20px;
-    display:none;
+.order-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.add-cart-btn{
+    margin-top:15px;
+    width:100%;
+    padding:12px;
+    background:#4B3932;
+    color:#F8F5F0;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.add-cart-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div>Brownie Babe 🍫</div>
-    <div class="cart-icon" onclick="toggleCart()">👜</div>
-</header>
-
-<div class="search-box">
-    <input type="text" id="search" placeholder="Search brownies..." oninput="searchProducts()">
+<!-- HEADER -->
+<div class="header">
+    <h1>Hey babe, are you ready to shop?</h1>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="toggleCart()">🛒</a>
+    </div>
 </div>
 
-<div class="products" id="productList"></div>
+<h2 class="page-title">Our Brownies</h2>
+
+<!-- PRODUCTS -->
+<div class="products">
+
+<div class="product" onclick="openModal('Valentine Brownie',280,'images/valentine-special1.jpeg',true,false,true)">
+<img src="images/valentine-special1.jpeg">
+<h3>Valentine Brownie</h3>
+<p>R280</p>
+</div>
+
+<div class="product" onclick="openModal('Small Valentine Brownie',120,'images/valentine-special2.jpeg',true,false,true)">
+<img src="images/valentine-special2.jpeg">
+<h3>Small Valentine Brownie</h3>
+<p>R120</p>
+</div>
+
+<div class="product" onclick="openModal('All-in-One Brownie',360,'images/all-in-one.jpeg',false,false,false)">
+<img src="images/all-in-one.jpeg">
+<h3>All-in-One Brownie</h3>
+<p>R360</p>
+</div>
+
+<div class="product" onclick="openModal('Customised Brownie',290,'images/customised.jpeg',true,true,false)">
+<img src="images/customised.jpeg">
+<h3>Customised Brownie</h3>
+<p>R290</p>
+</div>
+
+<div class="product" onclick="openModal('Small Customised Brownie',120,'images/small-customised.jpeg',true,true,false)">
+<img src="images/small-customised.jpeg">
+<h3>Small Customised Brownie</h3>
+<p>R120</p>
+</div>
+
+<div class="product" onclick="openModal('Overload Brownie',320,'images/overload.jpeg',true,true,false)">
+<img src="images/overload.jpeg">
+<h3>Overload Brownie</h3>
+<p>R320</p>
+</div>
+
+<div class="product" onclick="openModal('Specialty Brownie',0,'images/specialty-brownie.jpeg',false,false,false)">
+<img src="images/specialty-brownie.jpeg">
+<h3>Specialty Brownie</h3>
+<p>Request a price</p>
+</div>
+
+<div class="product" onclick="openModal('Fudge',20,'images/fudge.jpeg',false,false,false)">
+<img src="images/fudge.jpeg">
+<h3>Fudge</h3>
+<p>R20</p>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<span class="close" onclick="closeModal()">✖</span>
+<h3 id="modalTitle"></h3>
+<img id="modalImg" style="width:100%;height:200px;object-fit:contain;border-radius:12px;">
+
+<!-- Message section -->
+<div id="messageSection">
+<label>Message</label>
+<textarea id="message" style="width:100%;padding:8px;border:1px solid #4B3932;border-radius:10px;"></textarea>
+</div>
+
+<!-- Toppings section -->
+<div id="toppingsSection">
+<label>Toppings (R20 each, choose multiple)</label>
+<div style="font-size:12px;color:#4B3932;margin-bottom:5px;">Each topping costs R20</div>
+<div class="toppings" id="toppingsBox"></div>
+</div>
+
+<button class="add-cart-btn" onclick="addToCart()">Add to Cart</button>
+</div>
+</div>
 
 <!-- CART -->
 <div id="cart">
-    <div class="cart-header">
-        <span>👜</span>
-        <span onclick="toggleCart()">✖</span>
-    </div>
-
-    <div id="cartItems"></div>
-
-    <div class="cart-footer">
-        <div class="total" id="total">Total: R0</div>
-        <button class="order-btn" onclick="order()">Order Now</button>
-    </div>
+<div class="cart-header">
+<span>Your Cart</span>
+<span style="cursor:pointer" onclick="toggleCart()">✖</span>
+</div>
+<div id="cartItems"></div>
+<div class="cart-total" id="cartTotal"></div>
+<button class="order-btn" onclick="orderNow()">Order Now</button>
 </div>
 
-<div id="toast">Added to cart</div>
-
 <script>
-const products = [
- {n:'Valentine Brownie',p:280,i:'images/valentine-special1.jpeg'},
- {n:'Small Valentine Brownie',p:120,i:'images/valentine-special2.jpeg'},
- {n:'All-in-One Brownie',p:360,i:'images/all-in-one.jpeg'},
- {n:'Customised Brownie',p:290,i:'images/customised.jpeg'},
- {n:'Small Customised Brownie',p:120,i:'images/small-customised.jpeg'},
- {n:'Overload Brownie',p:320,i:'images/overload.jpeg'},
- {n:'Specialty Brownie',p:0,i:'images/specialty-brownie.jpeg'},
- {n:'Fudge',p:20,i:'images/fudge.jpeg'}
-];
+let cart=[];
+let current={};
 
-let cart = [];
+const toppingList=['Chocolate','Tex','M&M','Bueno','Biscoff','Oreos'];
 
-function renderProducts(list){
-    const box = document.getElementById('productList');
-    box.innerHTML = '';
-    list.forEach((x)=>{
-        box.innerHTML += `
-        <div class="card">
-            <img src="${x.i}" alt="${x.n}">
-            <h4>${x.n}</h4>
-            <p>${x.p ? 'R'+x.p : 'Request price'}</p>
-            <button onclick="addToCart('${x.n}',${x.p||0})">Add to Cart</button>
-        </div>`;
-    });
+function openModal(name,price,img,allowMessage,allowToppings,messageOnly=false){
+    current={name,price,img,toppings:[],allowToppings,allowMessage,messageOnly};
+    document.getElementById('modalTitle').innerText=name;
+    document.getElementById('modalImg').src=img;
+
+    const messageSection=document.getElementById('messageSection');
+    if(allowMessage){
+        messageSection.style.display='block';
+        document.getElementById('message').value='';
+    } else {
+        messageSection.style.display='none';
+    }
+
+    const toppingsSection=document.getElementById('toppingsSection');
+    const box=document.getElementById('toppingsBox');
+    box.innerHTML='';
+    if(allowToppings){
+        toppingsSection.style.display='block';
+        toppingList.forEach(t=>{
+            let d=document.createElement('div');
+            d.className='topping';
+            d.innerText=t;
+            d.onclick=()=>{
+                d.classList.toggle('active');
+                current.toppings.includes(t)?
+                    current.toppings=current.toppings.filter(x=>x!==t):
+                    current.toppings.push(t);
+            };
+            box.appendChild(d);
+        });
+    } else {
+        toppingsSection.style.display='none';
+    }
+
+    document.getElementById('modal').style.display='flex';
 }
 
-function searchProducts(){
-    const val = document.getElementById('search').value.toLowerCase();
-    renderProducts(products.filter(p=>p.n.toLowerCase().includes(val)));
-}
+function closeModal(){document.getElementById('modal').style.display='none';}
 
-function addToCart(name,price){
-    cart.push({name,price});
+function addToCart(){
+    if(current.allowMessage){
+        current.message=document.getElementById('message').value;
+    }
+    let finalPrice=current.price;
+    if(current.allowToppings){
+        finalPrice += current.toppings.length * 20;
+    }
+    cart.push({...current,finalPrice});
+    closeModal();
+    toggleCart();
     renderCart();
-    showToast();
-}
-
-function renderCart(){
-    let total = 0;
-    const box = document.getElementById('cartItems');
-    box.innerHTML = '';
-    cart.forEach(i=>{
-        total += i.price;
-        box.innerHTML += `<div class="cart-item">${i.name} - R${i.price}</div>`;
-    });
-    document.getElementById('total').innerText = 'Total: R'+total;
 }
 
 function toggleCart(){
     document.getElementById('cart').classList.toggle('open');
 }
 
-function showToast(){
-    const t = document.getElementById('toast');
-    t.style.display='block';
-    setTimeout(()=>t.style.display='none',1500);
+function removeItem(index){
+    cart.splice(index,1);
+    renderCart();
 }
 
-function order(){
-    let msg='Brownie Babe Order:%0A';
-    cart.forEach(i=>msg+=`${i.name} - R${i.price}%0A`);
-    window.open(`https://wa.me/27689795490?text=${msg}`);
+function renderCart(){
+    const box=document.getElementById('cartItems');
+    const totalBox=document.getElementById('cartTotal');
+    box.innerHTML='';
+    let total=0;
+    cart.forEach((i,index)=>{
+        total += i.finalPrice;
+        box.innerHTML+=`
+        <div class="cart-item">
+            <img src="${i.img}">
+            <strong>${i.name}</strong>
+            <span class="remove-item" onclick="removeItem(${index})">✖</span><br>
+            R${i.finalPrice}<br>
+            ${i.allowMessage && i.message?`Message: ${i.message}<br>`:''}
+            ${i.allowToppings && i.toppings.length?`Toppings: ${i.toppings.join(', ')}`:''}
+        </div>`;
+    });
+    totalBox.innerHTML='Total: <strong>R'+total+'</strong>';
+    totalBox.style.color='#25D366';
 }
 
-renderProducts(products);
+function orderNow(){
+    if(cart.length === 0){
+        alert('Your cart is empty!');
+        return;
+    }
+    let message = 'Hello! I would like to place an order:\n\n';
+    cart.forEach((i,index)=>{
+        message += `${index+1}. ${i.name} - R${i.finalPrice}\n`;
+        if(i.allowMessage && i.message) message += `   Message: ${i.message}\n`;
+        if(i.allowToppings && i.toppings.length) message += `   Toppings: ${i.toppings.join(', ')}\n`;
+    });
+    let total = cart.reduce((sum,i)=>sum+i.finalPrice,0);
+    message += `\nTotal: R${total}`;
+    let url = 'https://wa.me/27689795490?text=' + encodeURIComponent(message);
+    window.open(url,'_blank');
+}
 </script>
 
 </body>
