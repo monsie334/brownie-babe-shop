@@ -14,7 +14,7 @@ body{
     color:#4B3932;
 }
 
-/* HEADER / BANNER */
+/* HEADER */
 .header{
     background:#000;
     color:#F8F5F0;
@@ -36,13 +36,13 @@ body{
     margin-left:20px;
     font-weight:bold;
     font-size:22px;
-    color:#fff; /* home link white */
+    color:#fff;
     transition: transform 0.2s;
 }
 .header a:hover{transform: scale(1.2);}
 .header .cart-icon{
     color:#fff;
-    font-size:36px; /* bigger cart */
+    font-size:40px; /* bigger cart icon */
     cursor:pointer;
     transition: transform 0.2s;
 }
@@ -99,7 +99,7 @@ body{
 .order-btn-product{
     width:100%;
     padding:16px;
-    background:#8B4513; /* brown */
+    background:#8B4513;
     color:#fff;
     border:none;
     font-weight:bold;
@@ -122,17 +122,12 @@ body{
     justify-content:center;
     align-items:center;
     z-index:1000;
-    animation: fadeIn 0.3s;
-}
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
 }
 .modal-box{
     background:#FFFFFF;
     width:95%;
-    max-width:600px; /* much bigger modal */
-    padding:40px;
+    max-width:650px;
+    padding:50px;
     border-radius:25px;
     position:relative;
     max-height:90vh;
@@ -173,7 +168,7 @@ body{
 .add-cart-btn{
     width:100%;
     padding:18px;
-    background:#8B4513; /* brown */
+    background:#8B4513;
     color:#fff;
     font-weight:bold;
     border:none;
@@ -191,10 +186,10 @@ body{
 /* CART */
 #cart{
     position:fixed;
-    top:0;
+    top:10%;
     right:-100%;
-    width:450px; /* bigger cart */
-    height:100%;
+    width:480px;
+    height:70%;
     background: linear-gradient(180deg,#F8F5F0,#FFFFFF);
     padding:30px;
     transition:.4s ease;
@@ -210,21 +205,21 @@ body{
     align-items:center;
     font-family:'Archivo Black';
     margin-bottom:25px;
-    font-size:22px;
+    font-size:24px;
     color:#4B3932;
 }
 .cart-item{
     margin:15px 0;
-    font-size:16px;
+    font-size:18px;
     border-bottom:1px solid #4B3932;
     padding-bottom:12px;
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:15px;
 }
 .cart-item img{
-    width:70px; /* bigger */
-    height:70px;
+    width:80px;
+    height:80px;
     object-fit:contain;
     border-radius:15px;
     border:1px solid #4B3932;
@@ -239,7 +234,7 @@ body{
 .cart-total{
     font-weight:bold;
     margin-top:20px;
-    font-size:22px; /* bigger price */
+    font-size:24px;
     border-top:2px solid #4B3932;
     padding-top:12px;
     color:#25D366;
@@ -247,7 +242,7 @@ body{
 .order-btn{
     margin-top:20px;
     width:100%;
-    padding:16px;
+    padding:18px;
     background:#25D366;
     color:white;
     border:none;
@@ -306,7 +301,7 @@ body{
         font-size:20px;
     }
     .header .cart-icon{
-        font-size:32px;
+        font-size:36px;
     }
 }
 </style>
@@ -391,16 +386,16 @@ body{
 <div class="modal-box">
 <span class="close" onclick="closeModal()">✖</span>
 <h3 id="modalTitle"></h3>
-<img id="modalImg" style="width:100%;height:300px;object-fit:contain;border-radius:12px;">
+<img id="modalImg" style="width:100%;height:350px;object-fit:contain;border-radius:12px;">
 
 <div id="messageSection">
 <label>Message</label>
-<textarea id="message" style="width:100%;padding:12px;border:1px solid #4B3932;border-radius:12px;font-size:16px;"></textarea>
+<textarea id="message" style="width:100%;padding:16px;border:1px solid #4B3932;border-radius:12px;font-size:18px;resize:none;"></textarea>
 </div>
 
 <div id="toppingsSection">
 <label>Toppings (R20 each, choose multiple)</label>
-<div style="font-size:14px;color:#4B3932;margin-bottom:8px;">Each topping costs R20</div>
+<div style="font-size:16px;color:#4B3932;margin-bottom:10px;">Each topping costs R20</div>
 <div class="toppings" id="toppingsBox"></div>
 </div>
 
@@ -491,8 +486,8 @@ function renderCart(){
             <img src="${i.img}">
             <strong>${i.name}</strong>
             <span class="remove-item" onclick="removeItem(${index})">✖</span>
-            ${i.allowMessage && i.message?`<div style="font-size:14px;">Message: ${i.message}</div>`:''}
-            ${i.allowToppings && i.toppings.length?`<div style="font-size:14px;">Toppings: ${i.toppings.join(', ')}</div>`:''}
+            ${i.allowMessage && i.message?`<div style="font-size:16px;">Message: ${i.message}</div>`:''}
+            ${i.allowToppings && i.toppings.length?`<div style="font-size:16px;">Toppings: ${i.toppings.join(', ')}</div>`:''}
         </div>`;
     });
     totalBox.innerHTML='Total: <strong>R'+total+'</strong>';
