@@ -64,6 +64,14 @@ header h1{font-size:17px;margin:0;}
   font-weight:600;
   cursor:pointer;
 }
+.quantity-input{
+  width:60px;
+  padding:8px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  text-align:center;
+}
 
 /* ===== POPUP ===== */
 .popup{
@@ -178,7 +186,7 @@ textarea{
 <h3>Valentine Special</h3>
 <p>Romantic brownie made to spoil someone special.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="openPopup('Valentine Special',280,false)">ORDER NOW</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special',280)">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -186,7 +194,7 @@ textarea{
 <h3>Valentine Special Deluxe</h3>
 <p>Extra indulgent, beautifully decorated and gift-ready.</p>
 <div class="price">R120</div>
-<div class="btn" onclick="openPopup('Valentine Special Deluxe',120,false)">ORDER NOW</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special Deluxe',120)">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -194,7 +202,7 @@ textarea{
 <h3>Customised Brownie</h3>
 <p>Box of 16 brownies with a personalised message and toppings of your choice.</p>
 <div class="price">R250</div>
-<div class="btn" onclick="openPopup('Customised Brownie',250,true)">ORDER NOW</div>
+<div class="btn" onclick="openPopup('Customised Brownie',250,true,true)">ORDER NOW</div>
 </div>
 
 <div class="card">
@@ -202,7 +210,7 @@ textarea{
 <h3>Small Customised Brownie</h3>
 <p>Box of 3 brownies – small, sweet and personal.</p>
 <div class="price">R120</div>
-<div class="btn" onclick="openPopup('Small Customised Brownie',120,true)">ORDER NOW</div>
+<div class="btn" onclick="openPopup('Small Customised Brownie',120,true,true)">ORDER NOW</div>
 </div>
 
 <div class="card">
@@ -210,23 +218,24 @@ textarea{
 <h3>Overload Brownie</h3>
 <p>All the toppings. Maximum indulgence.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="openPopup('Overload Brownie',280,false)">ORDER NOW</div>
+<div class="btn" onclick="addToCartDirect('Overload Brownie',280)">ADD TO CART</div>
 </div>
 
 <div class="card">
 <img src="images/all-in-one.jpeg">
 <h3>All-In-One Brownie</h3>
 <p>Box of 16 brownies with ALL toppings and a custom message.</p>
-<div class="price">R300</div>
-<div class="btn" onclick="openPopup('All-In-One Brownie',300,true)">ORDER NOW</div>
+<div class="price">R360</div>
+<div class="btn" onclick="openPopup('All-In-One Brownie',360,false,true)">WRITE MESSAGE</div>
 </div>
 
 <div class="card">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
 <p>Perfect for a quick chocolate fix.</p>
-<div class="price">R40</div>
-<div class="btn" onclick="openPopup('Single Brownie',40,false)">ORDER NOW</div>
+<div class="price">R30 each (min 5)</div>
+<input type="number" class="quantity-input" id="singleQty" value="5" min="5">
+<div class="btn" onclick="addSingleBrownie()">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -234,15 +243,22 @@ textarea{
 <h3>Fudge</h3>
 <p>Rich, soft and deeply chocolatey.</p>
 <div class="price">R20</div>
-<div class="btn" onclick="openPopup('Fudge',20,false)">ORDER NOW</div>
+<div class="btn" onclick="addToCartDirect('Fudge',20)">ADD TO CART</div>
+</div>
+
+<div class="card">
+<img src="images/trio-box.jpeg">
+<h3>Trio Box</h3>
+<p>Milky Bar flavour<br>Chocolate ganache<br>Caramel flavour</p>
+<div class="price">R100</div>
+<div class="btn" onclick="addToCartDirect('Trio Box',100)">ADD TO CART</div>
 </div>
 
 <div class="card">
 <img src="images/specialty-brownie.jpeg">
-<h3>Trio Box</h3>
-<p>Milky Bar flavour<br>Chocolate ganache<br>Caramel flavour</p>
-<div class="price">R180</div>
-<div class="btn" onclick="openPopup('Trio Box',180,false)">ORDER NOW</div>
+<h3>Specialty Brownie</h3>
+<p>Price on request</p>
+<div class="btn" onclick="requestPrice('Specialty Brownie')">REQUEST PRICE</div>
 </div>
 
 </section>
@@ -253,8 +269,10 @@ textarea{
 <span class="close" onclick="closePopup()">✕</span>
 <h3 id="popupTitle"></h3>
 
+<div id="messageWrap">
 <b>Write your message</b>
 <textarea id="message" placeholder="Your custom message here..."></textarea>
+</div>
 
 <div id="toppingsWrap">
 <b>Select toppings (R20 each)</b>
@@ -271,7 +289,7 @@ textarea{
 <div class="total-line" id="popupTotal"></div>
 </div>
 
-<div class="btn" onclick="addToCart()">ADD TO CART</div>
+<div class="btn" onclick="addToCartPopup()">ADD TO CART</div>
 </div>
 </div>
 
@@ -291,20 +309,25 @@ textarea{
 let cart=[];
 let basePrice=0;
 let needsTopping=false;
+let needsMessage=false;
 
+// CART FUNCTIONS
 function toggleCart(){
   document.getElementById('cart').classList.toggle('open');
 }
 
-function openPopup(name,price,requireTop){
+// POPUP
+function openPopup(name,price,toppingsRequired,messageRequired){
   document.getElementById('popupTitle').innerText=name;
   basePrice=price;
-  needsTopping=requireTop;
+  needsTopping=toppingsRequired;
+  needsMessage=messageRequired;
   document.getElementById('popupTotal').innerText="Total: R"+price;
   document.getElementById('popup').style.display="flex";
   document.querySelectorAll('.topping').forEach(t=>t.classList.remove('active'));
   document.getElementById('message').value="";
-  document.getElementById('toppingsWrap').style.display = requireTop ? 'block' : 'none';
+  document.getElementById('toppingsWrap').style.display = toppingsRequired ? 'block' : 'none';
+  document.getElementById('messageWrap').style.display = messageRequired ? 'block' : 'none';
 }
 
 function closePopup(){
@@ -322,15 +345,20 @@ function updatePopupTotal(){
     "Total: R" + (basePrice + count*20);
 }
 
-function addToCart(){
+function addToCartPopup(){
   let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
+  let message=document.getElementById('message').value;
   if(needsTopping && toppings.length<1){
     alert("Please choose at least 1 topping 💕");
     return;
   }
+  if(needsMessage && !message){
+    alert("Please write a message 💕");
+    return;
+  }
   cart.push({
     name:document.getElementById('popupTitle').innerText,
-    message:document.getElementById('message').value,
+    message:message,
     toppings:toppings,
     price:basePrice + toppings.length*20
   });
@@ -339,6 +367,30 @@ function addToCart(){
   showAdded();
 }
 
+// DIRECT ADD TO CART
+function addToCartDirect(name,price){
+  cart.push({name:name,message:"",toppings:[],price:price});
+  updateCart();
+  showAdded();
+}
+
+// SINGLE BROWNIE QUANTITY
+function addSingleBrownie(){
+  let qty=parseInt(document.getElementById('singleQty').value);
+  if(qty<5){ alert("Minimum quantity is 5"); return;}
+  let price=30*qty;
+  cart.push({name:"Single Brownie",message:"",toppings:[],price:price,qty:qty});
+  updateCart();
+  showAdded();
+}
+
+// REQUEST PRICE PRODUCT
+function requestPrice(name){
+  let text="Hello, I would like to inquire about "+name;
+  window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent(text));
+}
+
+// UPDATE CART
 function updateCart(){
   document.getElementById('cartCount').innerText=cart.length;
   let html="";
@@ -347,7 +399,8 @@ function updateCart(){
     <div class="cart-item">
       <b>${i.name}</b><br>
       ${i.message ? "Message: "+i.message+"<br>" : ""}
-      ${i.toppings.length ? "Toppings: "+i.toppings.join(", ")+"<br>" : ""}
+      ${i.toppings && i.toppings.length ? "Toppings: "+i.toppings.join(", ")+"<br>" : ""}
+      ${i.qty ? "Quantity: "+i.qty+"<br>" : ""}
       <b>Total: R${i.price}</b>
       <div class="remove" onclick="removeItem(${idx})">Remove</div>
     </div>`;
@@ -366,12 +419,14 @@ function showAdded(){
   setTimeout(()=>m.style.display="none",1500);
 }
 
+// CHECKOUT
 function checkout(){
   let text="Hello, I'd like to place an order:%0A%0A";
   cart.forEach((i,idx)=>{
     text+=`${idx+1}. ${i.name} - R${i.price}%0A`;
     if(i.message) text+=`Message: ${i.message}%0A`;
-    if(i.toppings.length) text+=`Toppings: ${i.toppings.join(", ")}%0A`;
+    if(i.toppings && i.toppings.length) text+=`Toppings: ${i.toppings.join(", ")}%0A`;
+    if(i.qty) text+=`Quantity: ${i.qty}%0A`;
     text+="%0A";
   });
   window.open("https://wa.me/27XXXXXXXXX?text="+text);
