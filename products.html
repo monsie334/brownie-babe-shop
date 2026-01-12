@@ -2,56 +2,50 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brownie Babe | Products</title>
 <style>
 :root{
   --cream:#f7f3ee;
   --brown:#4b2e1e;
-  --black:#000;
-  --white:#fff;
   --green:#25D366;
 }
 *{box-sizing:border-box;font-family:Poppins,Arial;}
-body{margin:0;background:var(--cream);position:relative;}
-header{background:#000;color:#fff;padding:18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
-header h1{font-size:20px;margin:0;}
+body{margin:0;background:var(--cream);}
+header{background:#000;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+header h1{margin:0;font-size:20px;}
 .header-icons span{cursor:pointer;font-weight:600;}
-.products{padding:16px;display:grid;grid-template-columns:1fr;gap:22px;}
+.products{padding:16px;display:grid;grid-template-columns:1fr;gap:20px;}
 @media(min-width:600px){.products{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.products{grid-template-columns:1fr 1fr 1fr;}}
-.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);position:relative;}
-.card:hover{transform:translateY(-6px);box-shadow:0 18px 30px rgba(0,0,0,.15);}
-.card img{width:100%;border-radius:18px;object-fit:cover;}
+.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);}
+.card img{width:100%;border-radius:18px;}
 .card h3{margin:12px 0 6px;}
 .card p{font-size:14px;line-height:1.4;min-height:40px;}
 .price{font-weight:700;font-size:18px;margin:8px 0;}
-.btn{background:var(--brown);color:#fff;padding:12px;border-radius:16px;text-align:center;font-weight:600;cursor:pointer;display:block;transition:background .2s;}
+.btn{background:var(--brown);color:#fff;padding:12px;border-radius:16px;text-align:center;font-weight:600;cursor:pointer;display:block;}
 .btn:hover{background:#000;}
-.quantity-control{display:flex;gap:10px;align-items:center;margin-top:8px;}
-.quantity-control button{padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:#fff;cursor:pointer;font-weight:600;}
-.quantity-control input{width:50px;text-align:center;border-radius:8px;border:1px solid #ccc;padding:6px;}
-.popup{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:50;opacity:0;transition:opacity .3s;}
-.popup.show{display:flex;opacity:1;}
-.popup-box{background:#fff;width:92%;max-width:450px;max-height:90vh;overflow:auto;border-radius:24px;padding:24px;box-shadow:0 12px 30px rgba(0,0,0,.2);position:relative;transform:translateY(-20px);transition:transform .3s;}
-.popup.show .popup-box{transform:translateY(0);}
-.popup-box h3{font-size:20px;margin-bottom:12px;text-align:center;font-weight:700;}
-.popup-box .close{position:absolute;top:12px;right:18px;font-size:26px;cursor:pointer;color:#444;transition:color .2s;}
-.popup-box .close:hover{color:#000;}
-textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-size:16px;resize:none;margin-top:8px;}
+.popup, .quantity-popup{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;}
+.popup-box, .quantity-box{background:#fff;width:90%;max-width:400px;padding:20px;border-radius:20px;position:relative;max-height:90vh;overflow:auto;}
+.popup-box h3, .quantity-box h3{text-align:center;margin-top:0;}
+.close{position:absolute;top:10px;right:15px;font-size:24px;cursor:pointer;}
+textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin-top:8px;}
 .toppings{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
-.topping{padding:10px 14px;border-radius:20px;border:2px solid var(--brown);cursor:pointer;font-size:14px;transition:all .2s;}
-.topping.active{background:var(--brown);color:#fff;transform:scale(1.05);}
-.total-line{margin-top:12px;font-weight:700;}
-.cart{position:fixed;top:0;right:-100%;width:90%;max-width:400px;height:100%;background:#fff;z-index:60;padding:20px;transition:.3s;overflow-y:auto;}
+.topping{padding:8px 12px;border-radius:20px;border:2px solid var(--brown);cursor:pointer;}
+.topping.active{background:var(--brown);color:#fff;}
+.total-line{font-weight:700;margin-top:10px;}
+.quantity-control{display:flex;gap:10px;align-items:center;justify-content:center;margin:10px 0;}
+.quantity-control button{padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:#fff;cursor:pointer;}
+.quantity-control input{width:50px;text-align:center;border-radius:8px;border:1px solid #ccc;padding:6px;}
+.cart{position:fixed;top:0;right:-100%;width:90%;max-width:400px;height:100%;background:#fff;z-index:100;padding:20px;overflow-y:auto;transition:.3s;}
 .cart.open{right:0;}
 .cart-header{display:flex;justify-content:space-between;align-items:center;}
-.cart-item{border-bottom:1px solid #eee;padding:12px 0;font-size:14px;display:flex;gap:10px;align-items:center;}
-.cart-item img{width:50px;height:50px;border-radius:12px;object-fit:cover;}
-.remove{color:red;font-size:13px;cursor:pointer;}
-.checkout{background:var(--green);color:#fff;padding:16px;border-radius:16px;text-align:center;font-weight:600;margin-top:20px;transition:background .2s;}
-.checkout:hover{background:#1ebe57;}
-.added{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:14px 22px;border-radius:30px;display:none;z-index:200;font-weight:600;box-shadow:0 6px 12px rgba(0,0,0,.3);}
+.cart-item{display:flex;gap:10px;border-bottom:1px solid #eee;padding:10px 0;}
+.cart-item img{width:60px;height:60px;border-radius:12px;object-fit:cover;}
+.remove{color:red;font-size:12px;cursor:pointer;}
+.cart-total{font-weight:700;font-size:16px;margin-top:10px;text-align:right;}
+.checkout{background:var(--green);color:#fff;text-align:center;padding:12px;margin-top:15px;border-radius:16px;cursor:pointer;}
+.added{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:10px 20px;border-radius:30px;display:none;z-index:200;}
 </style>
 </head>
 <body>
@@ -64,13 +58,14 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </header>
 
 <section class="products">
-<!-- All Products -->
+
+<!-- Products -->
 <div class="card">
 <img src="images/valentine-special1.jpeg">
 <h3>Valentine Special</h3>
 <p>Romantic brownie made to spoil someone special.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="addToCartDirect('Valentine Special',280,'images/valentine-special1.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special','Romantic brownie made to spoil someone special',280,'images/valentine-special1.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -78,7 +73,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>Valentine Special Deluxe</h3>
 <p>Extra indulgent, beautifully decorated and gift-ready.</p>
 <div class="price">R120</div>
-<div class="btn" onclick="addToCartDirect('Valentine Special Deluxe',120,'images/valentine-special2.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special Deluxe','Extra indulgent, beautifully decorated and gift-ready',120,'images/valentine-special2.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -86,7 +81,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>Customised Brownie</h3>
 <p>Box of 16 brownies with a personalised message and toppings.</p>
 <div class="price">R250</div>
-<div class="btn" onclick="openPopup('Customised Brownie',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="openPopup('Customised Brownie','Box of 16 brownies with a personalised message and toppings',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -94,7 +89,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>Small Customised Brownie</h3>
 <p>Box of 3 brownies – small, sweet and personal.</p>
 <div class="price">R120</div>
-<div class="btn" onclick="openPopup('Small Customised Brownie',120,true,true,'images/small-customised.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="openPopup('Small Customised Brownie','Box of 3 brownies – small, sweet and personal',120,true,true,'images/small-customised.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -102,7 +97,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>Overload Brownie</h3>
 <p>All the toppings. Maximum indulgence.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="addToCartDirect('Overload Brownie',280,'images/overload.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Overload Brownie','All the toppings. Maximum indulgence',280,'images/overload.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -110,15 +105,15 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>All-In-One Brownie</h3>
 <p>Box of 16 brownies with a custom message only.</p>
 <div class="price">R360</div>
-<div class="btn" onclick="openPopup('All-In-One Brownie',360,false,true,'images/all-in-one.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with a custom message only',360,false,true,'images/all-in-one.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
-<p>Perfect for a quick chocolate fix.</p>
-<div class="price">R30 each (min 5)</div>
-<div class="btn" onclick="openQuantityPopup('Single Brownie',30,'images/single.jpeg')">ADD TO CART</div>
+<p>Perfect for a quick chocolate fix. Minimum 5.</p>
+<div class="price">R30 each</div>
+<div class="btn" onclick="openQuantityPopup('Single Brownie','Perfect for a quick chocolate fix. Minimum 5',30,'images/single.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -126,7 +121,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>Fudge</h3>
 <p>Rich, soft and deeply chocolatey.</p>
 <div class="price">R20</div>
-<div class="btn" onclick="addToCartDirect('Fudge',20,'images/fudge.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Fudge','Rich, soft and deeply chocolatey',20,'images/fudge.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -134,7 +129,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <h3>Trio Box</h3>
 <p>Milky Bar, Chocolate Ganache, Caramel</p>
 <div class="price">R100</div>
-<div class="btn" onclick="addToCartDirect('Trio Box',100,'images/trio-box.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Trio Box','Milky Bar, Chocolate Ganache, Caramel',100,'images/trio-box.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -145,18 +140,15 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </div>
 </section>
 
-<!-- Popup -->
+<!-- Popups -->
 <div class="popup" id="popup">
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
 <h3 id="popupTitle"></h3>
-<div id="messageWrap">
-<b>Write your message</b>
-<textarea id="message" placeholder="Your custom message here..."></textarea>
-</div>
+<p id="popupDesc"></p>
+<div id="messageWrap"><b>Write your message:</b><textarea id="message" placeholder="Your custom message here"></textarea></div>
 <div id="toppingsWrap">
 <b>Select toppings (R20 each)</b>
-<p style="font-size:13px">Choose at least 1 topping</p>
 <div class="toppings">
 <div class="topping" onclick="toggleTopping(this)">Bueno (Kinder Joy)</div>
 <div class="topping" onclick="toggleTopping(this)">Chocolate Variety</div>
@@ -172,10 +164,11 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </div>
 
 <!-- Quantity Popup -->
-<div class="popup" id="quantityPopup">
-<div class="popup-box">
+<div class="quantity-popup" id="quantityPopup">
+<div class="quantity-box">
 <span class="close" onclick="closeQuantityPopup()">✕</span>
 <h3 id="quantityTitle"></h3>
+<p id="quantityDesc"></p>
 <div class="quantity-control">
 <button onclick="changeQty(-1)">-</button>
 <input type="number" id="quantityInput" value="5" min="5">
@@ -192,88 +185,104 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 <span class="close" onclick="toggleCart()">✕</span>
 </div>
 <div id="cartItems"></div>
+<div class="cart-total" id="cartTotal">Total: R0</div>
 <div class="checkout" onclick="checkout()">Checkout via WhatsApp</div>
 </div>
 
 <div class="added" id="addedMsg">Added to cart 🖤</div>
 
 <script>
-let cart=[],basePrice=0,needsTopping=false,needsMessage=false,currentProduct=null;
+let cart=[], currentProduct=null, basePrice=0, needsTopping=false, needsMessage=false;
 
-// Cart toggle
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
-// Popup functions
-function openPopup(name,price,toppingsRequired,messageRequired,img){
-  currentProduct={name:name,price:price,img:img};
+function openPopup(name,desc,price,toppingReq,messageReq,img){
+  currentProduct={name:name,desc:desc,price:price,img:img};
+  basePrice=price;needsTopping=toppingReq;needsMessage=messageReq;
   document.getElementById('popupTitle').innerText=name;
-  basePrice=price;needsTopping=toppingsRequired;needsMessage=messageRequired;
-  document.getElementById('popup').classList.add('show');
+  document.getElementById('popupDesc').innerText=desc;
+  document.getElementById('messageWrap').style.display=messageReq?'block':'none';
+  document.getElementById('toppingsWrap').style.display=toppingReq?'block':'none';
   document.querySelectorAll('.topping').forEach(t=>t.classList.remove('active'));
   document.getElementById('message').value="";
-  document.getElementById('toppingsWrap').style.display=toppingsRequired?'block':'none';
-  document.getElementById('messageWrap').style.display=messageRequired?'block':'none';
+  updatePopupTotal();
+  document.getElementById('popup').style.display='flex';
 }
-function closePopup(){document.getElementById('popup').classList.remove('show');}
+function closePopup(){document.getElementById('popup').style.display='none';}
 function toggleTopping(el){el.classList.toggle('active');updatePopupTotal();}
 function updatePopupTotal(){
-  let count=document.querySelectorAll('.topping.active').length;
-  document.getElementById('popupTotal').innerText="Total: R"+(basePrice+count*20);
+  let toppings=document.querySelectorAll('.topping.active').length;
+  document.getElementById('popupTotal').innerText="Total: R"+(basePrice+toppings*20);
 }
 function addToCartPopup(){
   let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
   let message=document.getElementById('message').value;
-  if(needsTopping && toppings.length<1){alert("Choose at least 1 topping"); return;}
-  if(needsMessage && !message){alert("Write a message"); return;}
-  cart.push({name:currentProduct.name,message:message,toppings:toppings,price:basePrice+toppings.length*20,img:currentProduct.img});
+  if(needsTopping && toppings.length<1){alert("Choose at least 1 topping");return;}
+  if(needsMessage && !message){alert("Write a message");return;}
+  cart.push({name:currentProduct.name,desc:currentProduct.desc,message:message,toppings:toppings,price:basePrice+toppings.length*20,img:currentProduct.img});
   updateCart();closePopup();showAdded();
 }
 
-// Quantity popup
-function openQuantityPopup(name,price,img){
-  currentProduct={name:name,price:price,img:img};
+// Quantity
+function openQuantityPopup(name,desc,price,img){
+  currentProduct={name:name,desc:desc,price:price,img:img};
   document.getElementById('quantityTitle').innerText=name;
+  document.getElementById('quantityDesc').innerText=desc;
   document.getElementById('quantityInput').value=5;
-  document.getElementById('quantityPopup').classList.add('show');
+  document.getElementById('quantityPopup').style.display='flex';
 }
-function closeQuantityPopup(){document.getElementById('quantityPopup').classList.remove('show');}
+function closeQuantityPopup(){document.getElementById('quantityPopup').style.display='none';}
 function changeQty(amount){
   let input=document.getElementById('quantityInput');
   let val=parseInt(input.value)+amount;
-  if(val<5) val=5; input.value=val;
+  if(val<5) val=5;
+  input.value=val;
 }
 function addSingleBrowniePopup(){
   let qty=parseInt(document.getElementById('quantityInput').value);
-  cart.push({name:currentProduct.name,price:currentProduct.price*qty,img:currentProduct.img,qty:qty});
+  cart.push({name:currentProduct.name,desc:currentProduct.desc,price:currentProduct.price*qty,qty:qty,img:currentProduct.img});
   updateCart();closeQuantityPopup();showAdded();
 }
 
 // Direct add to cart
-function addToCartDirect(name,price,img){cart.push({name:name,price:price,img:img});updateCart();showAdded();}
-function requestPrice(name){window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent("Hello, I would like to inquire about "+name));}
+function addToCartDirect(name,desc,price,img){
+  cart.push({name:name,desc:desc,price:price,img:img});
+  updateCart();showAdded();
+}
+
+// Request price
+function requestPrice(name){
+  window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent("Hello, I would like to inquire about "+name));
+}
 
 // Cart update
 function updateCart(){
   document.getElementById('cartCount').innerText=cart.length;
   let html="";
+  let total=0;
   cart.forEach((i,idx)=>{
+    total+=i.price;
     html+=`<div class="cart-item">
-      <img src="${i.img || 'images/default.jpeg'}">
+      <img src="${i.img}">
       <div>
         <b>${i.name}</b><br>
-        ${i.qty ? "Quantity: "+i.qty+"<br>" : ""}
-        ${i.toppings && i.toppings.length ? "Toppings: "+i.toppings.join(", ")+"<br>" : ""}
-        ${i.message ? "Message: "+i.message+"<br>" : ""}
-        <b>Total: R${i.price}</b>
+        ${i.desc ? i.desc+"<br>" : ""}
+        ${i.qty ? "Quantity: "+i.qty+"<br>": ""}
+        ${i.message ? "Message: "+i.message+"<br>": ""}
+        ${i.toppings && i.toppings.length ? "Toppings: "+i.toppings.join(", ")+"<br>": ""}
+        <b>R${i.price}</b>
         <div class="remove" onclick="removeItem(${idx})">Remove</div>
       </div>
     </div>`;
   });
   document.getElementById('cartItems').innerHTML=html;
+  document.getElementById('cartTotal').innerText="Total: R"+total;
 }
+
 function removeItem(idx){cart.splice(idx,1);updateCart();}
-function showAdded(){let m=document.getElementById('addedMsg');m.style.display='block';setTimeout(()=>m.style.display='none',1500);}
+function showAdded(){let m=document.getElementById('addedMsg');m.style.display='block';setTimeout(()=>{m.style.display='none';},1500);}
 function checkout(){
+  if(cart.length<1){alert("Cart is empty"); return;}
   let text="Hello, I'd like to place an order:%0A%0A";
   cart.forEach((i,idx)=>{
     text+=`${idx+1}. ${i.name} - R${i.price}%0A`;
@@ -285,5 +294,6 @@ function checkout(){
   window.open("https://wa.me/27XXXXXXXXX?text="+text);
 }
 </script>
+
 </body>
 </html>
