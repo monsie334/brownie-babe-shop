@@ -14,7 +14,7 @@ header .header-icons span{cursor:pointer;font-weight:600;}
 .products{padding:16px;display:grid;grid-template-columns:1fr;gap:20px;}
 @media(min-width:600px){.products{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.products{grid-template-columns:1fr 1fr 1fr;}}
-.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);transition:transform .2s;}
+.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);transition:transform .2s;cursor:pointer;}
 .card:hover{transform:scale(1.02);}
 .card img{width:100%;border-radius:18px;}
 .card h3{margin:12px 0 6px;}
@@ -139,7 +139,7 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 
 </section>
 
-<!-- Popups and Quantity Popup -->
+<!-- Popups -->
 <div class="popup" id="popup">
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
@@ -194,6 +194,7 @@ let cart=[], currentProduct=null, basePrice=0, needsTopping=false, needsMessage=
 function goHome(){window.location.href="index.html";}
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
+// Popups
 function openPopup(name,desc,price,toppingReq,messageReq,img){
   currentProduct={name,desc,price,img};
   basePrice=price;needsTopping=toppingReq;needsMessage=messageReq;
