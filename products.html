@@ -1,55 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 <title>Brownie Babe Shop</title>
 
 <style>
 :root{
-  --bg:#fff;
+  --cream:#f7f3ee;
   --brown:#4b2e1e;
-  --cream:#f6f1eb;
   --black:#000;
-  --accent:#ff5a7a;
+  --white:#fff;
+  --accent:#ff6b8a;
 }
 
-*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{margin:0;background:var(--cream);color:#333;}
+*{box-sizing:border-box;font-family:Poppins,Arial;}
+body{margin:0;background:var(--cream);}
 
 /* ===== HEADER ===== */
 header{
   background:#000;
   color:#fff;
-  padding:16px;
+  padding:18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-header h1{font-size:18px;margin:0;}
-.cart-btn{
-  position:relative;
-  font-size:26px;
-  cursor:pointer;
+header h1{
+  font-size:18px;
+  margin:0;
 }
-.cart-btn::after{
-  content:"";
-  width:26px;
-  height:18px;
+
+/* CART ICON (MATCHES YOUR STYLE) */
+.cart-icon{
+  position:relative;
+  width:32px;
+  height:24px;
   border:3px solid #fff;
   border-radius:6px;
-  display:inline-block;
-  position:relative;
+  cursor:pointer;
 }
-.cart-btn span{
+.cart-icon:before,
+.cart-icon:after{
+  content:"";
   position:absolute;
-  top:-6px;
-  right:-6px;
+  bottom:-6px;
+  width:6px;
+  height:6px;
+  background:#fff;
+  border-radius:50%;
+}
+.cart-icon:before{left:4px;}
+.cart-icon:after{right:4px;}
+
+.cart-count{
+  position:absolute;
+  top:-10px;
+  right:-10px;
   background:var(--accent);
   color:#fff;
-  border-radius:50%;
   font-size:12px;
   padding:2px 6px;
+  border-radius:50%;
 }
 
 /* ===== PRODUCTS ===== */
@@ -59,27 +73,39 @@ header h1{font-size:18px;margin:0;}
   grid-template-columns:1fr;
   gap:20px;
 }
+
 .card{
   background:#fff;
-  border-radius:20px;
+  border-radius:22px;
   padding:16px;
-  box-shadow:0 10px 20px rgba(0,0,0,.08);
+  box-shadow:0 12px 25px rgba(0,0,0,.08);
 }
+
 .card img{
   width:100%;
-  border-radius:16px;
+  border-radius:18px;
 }
-.card h3{margin:12px 0 6px;}
-.card p{font-size:14px;}
-.price{font-weight:bold;margin:8px 0;}
+
+.card h3{
+  margin:12px 0 6px;
+}
+.card p{
+  font-size:14px;
+}
+.price{
+  font-weight:700;
+  font-size:18px;
+  margin:8px 0;
+}
+
 .btn{
   background:#000;
   color:#fff;
-  padding:14px;
-  border-radius:14px;
+  padding:16px;
+  border-radius:16px;
   text-align:center;
+  font-weight:600;
   cursor:pointer;
-  margin-top:10px;
 }
 
 /* ===== POPUP ===== */
@@ -90,39 +116,40 @@ header h1{font-size:18px;margin:0;}
   display:none;
   align-items:center;
   justify-content:center;
-  z-index:10;
+  z-index:20;
 }
-.popup-content{
+.popup-box{
   background:#fff;
   width:92%;
   max-height:90vh;
   overflow:auto;
-  border-radius:22px;
+  border-radius:24px;
   padding:20px;
 }
 .close{
-  font-size:24px;
-  cursor:pointer;
+  font-size:26px;
   float:right;
+  cursor:pointer;
 }
-input, textarea{
+
+textarea{
   width:100%;
-  padding:14px;
-  margin:8px 0;
-  border-radius:12px;
+  padding:16px;
+  border-radius:14px;
   border:1px solid #ccc;
   font-size:16px;
+  resize:none;
 }
-textarea{resize:none;}
+
 .toppings{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
 }
 .topping{
+  border:2px solid var(--brown);
   padding:10px 14px;
   border-radius:20px;
-  border:2px solid var(--brown);
   cursor:pointer;
 }
 .topping.active{
@@ -135,28 +162,41 @@ textarea{resize:none;}
   position:fixed;
   top:0;
   right:-100%;
-  width:88%;
+  width:90%;
   height:100%;
   background:#fff;
-  z-index:20;
+  z-index:30;
   padding:20px;
   transition:.3s;
 }
 .cart.open{right:0;}
-.cart h2{text-align:center;}
+
+.cart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 .cart-item{
   border-bottom:1px solid #eee;
-  padding:10px 0;
+  padding:12px 0;
 }
-.remove{color:red;font-size:14px;cursor:pointer;}
+.remove{
+  color:red;
+  font-size:14px;
+  cursor:pointer;
+}
+
 .checkout{
   background:#25D366;
   color:#fff;
-  padding:16px;
+  padding:18px;
   text-align:center;
-  border-radius:14px;
+  border-radius:16px;
   margin-top:20px;
+  font-weight:600;
 }
+
+/* ADDED MESSAGE */
 .added{
   position:fixed;
   bottom:30px;
@@ -164,7 +204,7 @@ textarea{resize:none;}
   transform:translateX(-50%);
   background:#000;
   color:#fff;
-  padding:14px 20px;
+  padding:14px 22px;
   border-radius:30px;
   display:none;
 }
@@ -174,138 +214,154 @@ textarea{resize:none;}
 <body>
 
 <header>
-  <h1>Hey babe, ready to shop?</h1>
-  <div class="cart-btn" onclick="toggleCart()">🛒<span id="count">0</span></div>
+<h1>Hey babe, ready to shop?</h1>
+<div onclick="toggleCart()" class="cart-icon">
+  <div class="cart-count" id="count">0</div>
+</div>
 </header>
 
 <section class="products">
 
-<!-- CUSTOMISED BROWNIE -->
+<!-- CUSTOMISED -->
 <div class="card">
 <img src="customised.jpeg">
 <h3>Customised Brownie</h3>
-<p>Box of 16 rich brownies with a personalised message and toppings of your choice.</p>
+<p>Box of 16 brownies with a personalised message & toppings of your choice.</p>
 <div class="price">R250</div>
-<div class="btn" onclick="openPopup('Customised Brownie', true)">ORDER NOW</div>
+<div class="btn" onclick="openPopup('Customised Brownie',true)">ORDER NOW</div>
+</div>
+
+<!-- SMALL -->
+<div class="card">
+<img src="small-customised.jpeg">
+<h3>Small Customised Brownie</h3>
+<p>Box of 3 brownies with a sweet personalised touch.</p>
+<div class="price">R120</div>
+<div class="btn" onclick="openPopup('Small Customised Brownie',true)">ORDER NOW</div>
 </div>
 
 <!-- OVERLOAD -->
 <div class="card">
 <img src="overload.jpeg">
 <h3>Overload Brownie</h3>
-<p>A brownie loaded with ALL the toppings. Decadent, rich and indulgent.</p>
+<p>All the toppings. Rich, indulgent & extra.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="openPopup('Overload Brownie', false)">ORDER NOW</div>
+<div class="btn" onclick="openPopup('Overload Brownie',true)">ORDER NOW</div>
 </div>
 
 <!-- ALL IN ONE -->
 <div class="card">
 <img src="all-in-one.jpeg">
 <h3>All-In-One Brownie</h3>
-<p>Box of 16 brownies with a customised message and all the toppings.</p>
+<p>Box of 16 brownies with ALL toppings + custom message.</p>
 <div class="price">R300</div>
-<div class="btn" onclick="openPopup('All In One', true)">ORDER NOW</div>
+<div class="btn" onclick="openPopup('All-In-One Brownie',true)">ORDER NOW</div>
 </div>
 
 </section>
 
 <!-- POPUP -->
 <div class="popup" id="popup">
-<div class="popup-content">
+<div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
+
 <h3 id="popupTitle"></h3>
 
 <b>Write a message</b>
-<textarea id="message" placeholder="Type your message here..."></textarea>
+<textarea id="message" placeholder="Your message here…"></textarea>
 
-<b>Select toppings (R20 each)</b>
-<p style="font-size:13px">Choose at least 1 topping</p>
+<b>Select toppings (R20 each – choose at least 1)</b>
 <div class="toppings">
-<div class="topping" onclick="toggleTopping(this)">Oreos</div>
-<div class="topping" onclick="toggleTopping(this)">KitKat</div>
-<div class="topping" onclick="toggleTopping(this)">Caramel</div>
-<div class="topping" onclick="toggleTopping(this)">Smarties</div>
+<div class="topping">Beuno (Kinder Joy)</div>
+<div class="topping">Chocolate Variety</div>
+<div class="topping">Oreo</div>
+<div class="topping">Biscoff</div>
+<div class="topping">M&M’s</div>
+<div class="topping">Tex</div>
+<div class="topping">Kit Kat</div>
 </div>
 
-<div class="btn" onclick="addToCart()">Add to Cart</div>
+<div class="btn" onclick="addToCart()">ADD TO CART</div>
 </div>
 </div>
 
 <!-- CART -->
 <div class="cart" id="cart">
+<div class="cart-header">
 <h2>Your Cart</h2>
+<span class="close" onclick="toggleCart()">✕</span>
+</div>
 <div id="cartItems"></div>
 <div class="checkout" onclick="checkout()">Checkout via WhatsApp</div>
 </div>
 
-<div class="added" id="addedMsg">Added to cart 🖤</div>
+<div class="added" id="added">Added to cart 🖤</div>
 
 <script>
 let cart=[];
 let currentProduct="";
-let needsTopping=false;
+let needsTopping=true;
+
+document.querySelectorAll('.topping').forEach(t=>{
+t.onclick=()=>t.classList.toggle('active');
+});
 
 function toggleCart(){
-  document.getElementById('cart').classList.toggle('open');
+document.getElementById('cart').classList.toggle('open');
 }
 
-function openPopup(name, topping){
-  currentProduct=name;
-  needsTopping=topping;
-  document.getElementById('popupTitle').innerText=name;
-  document.getElementById('popup').style.display="flex";
+function openPopup(name,topping){
+currentProduct=name;
+needsTopping=topping;
+document.getElementById('popupTitle').innerText=name;
+document.getElementById('popup').style.display="flex";
 }
 
 function closePopup(){
-  document.getElementById('popup').style.display="none";
-}
-
-function toggleTopping(el){
-  el.classList.toggle('active');
+document.getElementById('popup').style.display="none";
 }
 
 function addToCart(){
-  let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
-  if(needsTopping && toppings.length<1){
-    alert("Please select at least 1 topping");
-    return;
-  }
-  cart.push({name:currentProduct,toppings});
-  updateCart();
-  closePopup();
-  showAdded();
+let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
+if(needsTopping && toppings.length<1){
+alert("Please choose at least 1 topping 💕");
+return;
+}
+cart.push({name:currentProduct,toppings});
+updateCart();
+closePopup();
+showAdded();
 }
 
 function updateCart(){
-  document.getElementById('count').innerText=cart.length;
-  let html="";
-  cart.forEach((i,idx)=>{
-    html+=`<div class="cart-item">
-    <b>${i.name}</b><br>
-    ${i.toppings.join(', ')}
-    <div class="remove" onclick="removeItem(${idx})">Remove</div>
-    </div>`;
-  });
-  document.getElementById('cartItems').innerHTML=html;
+document.getElementById('count').innerText=cart.length;
+let html="";
+cart.forEach((i,idx)=>{
+html+=`<div class="cart-item">
+<b>${i.name}</b><br>${i.toppings.join(', ')}
+<div class="remove" onclick="removeItem(${idx})">Remove</div>
+</div>`;
+});
+document.getElementById('cartItems').innerHTML=html;
 }
 
 function removeItem(i){
-  cart.splice(i,1);
-  updateCart();
+cart.splice(i,1);
+updateCart();
 }
 
 function showAdded(){
-  let m=document.getElementById('addedMsg');
-  m.style.display="block";
-  setTimeout(()=>m.style.display="none",1500);
+let a=document.getElementById('added');
+a.style.display="block";
+setTimeout(()=>a.style.display="none",1500);
 }
 
 function checkout(){
-  let text="Hello, I'd like to order:%0A";
-  cart.forEach(i=>{
-    text+=`- ${i.name} (${i.toppings.join(', ')})%0A`;
-  });
-  window.open(`https://wa.me/27XXXXXXXXX?text=${text}`);
+let msg="Hello, I'd like to order:%0A";
+cart.forEach(i=>{
+msg+=`- ${i.name}: ${i.toppings.join(', ')}%0A`;
+});
+window.open("https://wa.me/27XXXXXXXXX?text="+msg);
 }
 </script>
 
