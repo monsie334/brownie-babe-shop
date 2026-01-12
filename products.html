@@ -22,7 +22,7 @@ header .header-icons span{cursor:pointer;font-weight:600;}
 .price{font-weight:700;font-size:18px;margin:8px 0;}
 .btn{background:var(--brown);color:#fff;padding:12px;border-radius:16px;text-align:center;font-weight:600;cursor:pointer;margin-top:8px;}
 .btn:hover{background:#000;}
-.popup, .quantity-popup{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;}
+.popup, .quantity-popup{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;}
 .popup-box, .quantity-box{background:#fff;width:90%;max-width:400px;padding:20px;border-radius:20px;position:relative;max-height:90vh;overflow:auto;}
 .popup-box h3, .quantity-box h3{text-align:center;margin-top:0;}
 .close{position:absolute;top:10px;right:15px;font-size:24px;cursor:pointer;}
@@ -79,7 +79,7 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 <h3>Customised Brownie</h3>
 <p>Box of 16 brownies with a personalised message and toppings.</p>
 <div class="price">R250</div>
-<div class="btn" onclick="openPopup('Customised Brownie','Box of 16 brownies with a personalised message and toppings',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="openPopup('Customised Brownie','Box of 16 brownies with message and toppings',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -103,13 +103,13 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 <h3>All-In-One Brownie</h3>
 <p>Box of 16 brownies with a custom message only.</p>
 <div class="price">R360</div>
-<div class="btn" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with a custom message only',360,false,true,'images/all-in-one.jpeg')">ADD TO CART</div>
+<div class="btn" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with custom message',360,false,true,'images/all-in-one.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
-<p>Perfect for a quick chocolate fix. Minimum 5.</p>
+<p>Minimum 5 brownies</p>
 <div class="price">R30 each</div>
 <div class="btn" onclick="openQuantityPopup('Single Brownie','Minimum 5 brownies',30,'images/single.jpeg')">ADD TO CART</div>
 </div>
@@ -133,19 +133,22 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 <div class="card">
 <img src="images/specialty-brownie.jpeg">
 <h3>Specialty Brownie</h3>
-<p>Price on request</p>
+<p>Request price</p>
 <div class="btn" onclick="requestPrice('Specialty Brownie')">ADD TO CART</div>
 </div>
 
 </section>
 
-<!-- Popups -->
+<!-- Message + toppings popup -->
 <div class="popup" id="popup">
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
 <h3 id="popupTitle"></h3>
 <p id="popupDesc"></p>
-<div id="messageWrap"><b>Write your message:</b><textarea id="message" placeholder="Your custom message here"></textarea></div>
+<div id="messageWrap">
+<b>Write your message:</b>
+<textarea id="message" placeholder="Your custom message here"></textarea>
+</div>
 <div id="toppingsWrap">
 <b>Select toppings (R20 each)</b>
 <div class="toppings">
@@ -162,6 +165,7 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 </div>
 </div>
 
+<!-- Quantity popup for Single Brownie -->
 <div class="quantity-popup" id="quantityPopup">
 <div class="quantity-box">
 <span class="close" onclick="closeQuantityPopup()">✕</span>
@@ -194,32 +198,29 @@ let cart=[], currentProduct=null, basePrice=0, needsTopping=false, needsMessage=
 function goHome(){window.location.href="index.html";}
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
-// Popups
 function openPopup(name,desc,price,toppingReq,messageReq,img){
-  currentProduct={name,desc,price,img};
-  basePrice=price;needsTopping=toppingReq;needsMessage=messageReq;
+  currentProduct={name,desc,price,img}; basePrice=price; needsTopping=toppingReq; needsMessage=messageReq;
   document.getElementById('popupTitle').innerText=name;
   document.getElementById('popupDesc').innerText=desc;
-  document.getElementById('messageWrap').style.display=messageReq?'block':'none';
-  document.getElementById('toppingsWrap').style.display=toppingReq?'block':'none';
+  document.getElementById('messageWrap').style.display = messageReq ? 'block':'none';
+  document.getElementById('toppingsWrap').style.display = toppingReq ? 'block':'none';
   document.querySelectorAll('.topping').forEach(t=>t.classList.remove('active'));
-  document.getElementById('message').value="";
+  document.getElementById('message').value='';
   updatePopupTotal();
   document.getElementById('popup').style.display='flex';
 }
 function closePopup(){document.getElementById('popup').style.display='none';}
-function toggleTopping(el){el.classList.toggle('active');updatePopupTotal();}
-function updatePopupTotal(){document.getElementById('popupTotal').innerText="Total: R"+(basePrice+document.querySelectorAll('.topping.active').length*20);}
+function toggleTopping(el){el.classList.toggle('active'); updatePopupTotal();}
+function updatePopupTotal(){document.getElementById('popupTotal').innerText="Total: R"+(basePrice + document.querySelectorAll('.topping.active').length*20);}
 function addToCartPopup(){
   let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
   let message=document.getElementById('message').value;
-  if(needsTopping && toppings.length<1){alert("Choose at least 1 topping");return;}
-  if(needsMessage && !message){alert("Write a message");return;}
-  cart.push({name:currentProduct.name,desc:currentProduct.desc,message, toppings,price:basePrice+toppings.length*20,img:currentProduct.img,qty:1});
-  updateCart();closePopup();showAdded();
+  if(needsTopping && toppings.length<1){alert("Choose at least 1 topping"); return;}
+  if(needsMessage && !message){alert("Write a message"); return;}
+  cart.push({name:currentProduct.name,desc:currentProduct.desc,message,toppings,price:basePrice+toppings.length*20,img:currentProduct.img,qty:1});
+  updateCart(); closePopup(); showAdded();
 }
 
-// Quantity popup
 function openQuantityPopup(name,desc,price,img){
   currentProduct={name,desc,price,img};
   document.getElementById('quantityTitle').innerText=name;
@@ -235,20 +236,15 @@ function changeQty(amount){
 function addSingleBrowniePopup(){
   let qty=parseInt(document.getElementById('quantityInput').value);
   cart.push({name:currentProduct.name,desc:currentProduct.desc,price:currentProduct.price*qty,img:currentProduct.img,qty:qty});
-  updateCart();closeQuantityPopup();showAdded();
+  updateCart(); closeQuantityPopup(); showAdded();
 }
 
-// Direct add
-function addToCartDirect(name,desc,price,img){
-  cart.push({name,desc,price,img,qty:1});
-  updateCart();showAdded();
-}
+function addToCartDirect(name,desc,price,img){cart.push({name,desc,price,img,qty:1}); updateCart(); showAdded();}
 function requestPrice(name){window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent("Hello, I would like to inquire about "+name));}
 
-// Cart functions
 function updateCart(){
   document.getElementById('cartCount').innerText=cart.length;
-  let html="",total=0;
+  let html="", total=0;
   cart.forEach((i,idx)=>{
     total+=i.price;
     html+=`<div class="cart-item"><img src="${i.img}"><div><b>${i.name}</b><br>${i.desc?i.desc+"<br>":""}${i.qty?"Quantity: "+i.qty+"<br>":""}${i.message?"Message: "+i.message+"<br>":""}${i.toppings&&i.toppings.length?"Toppings: "+i.toppings.join(", ")+"<br>":""}<b>R${i.price}</b><div class="remove" onclick="removeItem(${idx})">Remove</div></div></div>`;
@@ -259,7 +255,7 @@ function updateCart(){
 function removeItem(idx){cart.splice(idx,1);updateCart();}
 function showAdded(){let m=document.getElementById('addedMsg');m.classList.add('show');setTimeout(()=>{m.classList.remove('show');},1500);}
 function checkout(){
-  if(cart.length<1){alert("Cart is empty");return;}
+  if(cart.length<1){alert("Cart is empty"); return;}
   let text="Hello, I'd like to place an order:%0A%0A";
   cart.forEach((i,idx)=>{text+=`${idx+1}. ${i.name} - R${i.price}%0A`;if(i.qty)text+=`Quantity: ${i.qty}%0A`;if(i.message)text+=`Message: ${i.message}%0A`;if(i.toppings&&i.toppings.length)text+=`Toppings: ${i.toppings.join(", ")}%0A`;text+="%0A";});
   window.open("https://wa.me/27XXXXXXXXX?text="+text);
