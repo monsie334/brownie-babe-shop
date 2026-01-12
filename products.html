@@ -64,12 +64,37 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </header>
 
 <section class="products">
+<!-- All Products -->
 <div class="card">
-<img src="images/single.jpeg">
-<h3>Single Brownie</h3>
-<p>Perfect for a quick chocolate fix.</p>
-<div class="price">R30 each (min 5)</div>
-<div class="btn" onclick="openQuantityPopup('Single Brownie',30,'images/single.jpeg')">ADD TO CART</div>
+<img src="images/valentine-special1.jpeg">
+<h3>Valentine Special</h3>
+<p>Romantic brownie made to spoil someone special.</p>
+<div class="price">R280</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special',280,'images/valentine-special1.jpeg')">ADD TO CART</div>
+</div>
+
+<div class="card">
+<img src="images/valentine-special2.jpeg">
+<h3>Valentine Special Deluxe</h3>
+<p>Extra indulgent, beautifully decorated and gift-ready.</p>
+<div class="price">R120</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special Deluxe',120,'images/valentine-special2.jpeg')">ADD TO CART</div>
+</div>
+
+<div class="card">
+<img src="images/customised.jpeg">
+<h3>Customised Brownie</h3>
+<p>Box of 16 brownies with a personalised message and toppings.</p>
+<div class="price">R250</div>
+<div class="btn" onclick="openPopup('Customised Brownie',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
+</div>
+
+<div class="card">
+<img src="images/small-customised.jpeg">
+<h3>Small Customised Brownie</h3>
+<p>Box of 3 brownies – small, sweet and personal.</p>
+<div class="price">R120</div>
+<div class="btn" onclick="openPopup('Small Customised Brownie',120,true,true,'images/small-customised.jpeg')">ADD TO CART</div>
 </div>
 
 <div class="card">
@@ -89,6 +114,22 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </div>
 
 <div class="card">
+<img src="images/single.jpeg">
+<h3>Single Brownie</h3>
+<p>Perfect for a quick chocolate fix.</p>
+<div class="price">R30 each (min 5)</div>
+<div class="btn" onclick="openQuantityPopup('Single Brownie',30,'images/single.jpeg')">ADD TO CART</div>
+</div>
+
+<div class="card">
+<img src="images/fudge.jpeg">
+<h3>Fudge</h3>
+<p>Rich, soft and deeply chocolatey.</p>
+<div class="price">R20</div>
+<div class="btn" onclick="addToCartDirect('Fudge',20,'images/fudge.jpeg')">ADD TO CART</div>
+</div>
+
+<div class="card">
 <img src="images/trio-box.jpeg">
 <h3>Trio Box</h3>
 <p>Milky Bar, Chocolate Ganache, Caramel</p>
@@ -104,7 +145,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </div>
 </section>
 
-<!-- POPUPS -->
+<!-- Popup -->
 <div class="popup" id="popup">
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
@@ -130,6 +171,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </div>
 </div>
 
+<!-- Quantity Popup -->
 <div class="popup" id="quantityPopup">
 <div class="popup-box">
 <span class="close" onclick="closeQuantityPopup()">✕</span>
@@ -143,7 +185,7 @@ textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ccc;font-s
 </div>
 </div>
 
-<!-- CART -->
+<!-- Cart -->
 <div class="cart" id="cart">
 <div class="cart-header">
 <h2>Your Cart</h2>
@@ -161,7 +203,7 @@ let cart=[],basePrice=0,needsTopping=false,needsMessage=false,currentProduct=nul
 // Cart toggle
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
-// Popups
+// Popup functions
 function openPopup(name,price,toppingsRequired,messageRequired,img){
   currentProduct={name:name,price:price,img:img};
   document.getElementById('popupTitle').innerText=name;
@@ -192,9 +234,9 @@ function openQuantityPopup(name,price,img){
   currentProduct={name:name,price:price,img:img};
   document.getElementById('quantityTitle').innerText=name;
   document.getElementById('quantityInput').value=5;
-  document.getElementById('quantityPopup').style.display='flex';
+  document.getElementById('quantityPopup').classList.add('show');
 }
-function closeQuantityPopup(){document.getElementById('quantityPopup').style.display='none';}
+function closeQuantityPopup(){document.getElementById('quantityPopup').classList.remove('show');}
 function changeQty(amount){
   let input=document.getElementById('quantityInput');
   let val=parseInt(input.value)+amount;
