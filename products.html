@@ -45,7 +45,8 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 .remove{color:red;font-size:12px;cursor:pointer;}
 .cart-total{font-weight:700;font-size:16px;margin-top:10px;text-align:right;}
 .checkout{background:var(--green);color:#fff;text-align:center;padding:12px;margin-top:15px;border-radius:16px;cursor:pointer;}
-.added{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:10px 20px;border-radius:30px;display:none;z-index:200;}
+.added{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:10px 20px;border-radius:30px;display:none;z-index:200;opacity:0;transition:opacity .5s;}
+.added.show{opacity:1;}
 </style>
 </head>
 <body>
@@ -196,6 +197,7 @@ let cart=[], currentProduct=null, basePrice=0, needsTopping=false, needsMessage=
 
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
+// Popups
 function openPopup(name,desc,price,toppingReq,messageReq,img){
   currentProduct={name:name,desc:desc,price:price,img:img};
   basePrice=price;needsTopping=toppingReq;needsMessage=messageReq;
@@ -210,10 +212,7 @@ function openPopup(name,desc,price,toppingReq,messageReq,img){
 }
 function closePopup(){document.getElementById('popup').style.display='none';}
 function toggleTopping(el){el.classList.toggle('active');updatePopupTotal();}
-function updatePopupTotal(){
-  let toppings=document.querySelectorAll('.topping.active').length;
-  document.getElementById('popupTotal').innerText="Total: R"+(basePrice+toppings*20);
-}
+function updatePopupTotal(){document.getElementById('popupTotal').innerText="Total: R"+(basePrice+document.querySelectorAll('.topping.active').length*20);}
 function addToCartPopup(){
   let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
   let message=document.getElementById('message').value;
@@ -232,67 +231,25 @@ function openQuantityPopup(name,desc,price,img){
   document.getElementById('quantityPopup').style.display='flex';
 }
 function closeQuantityPopup(){document.getElementById('quantityPopup').style.display='none';}
-function changeQty(amount){
-  let input=document.getElementById('quantityInput');
-  let val=parseInt(input.value)+amount;
-  if(val<5) val=5;
-  input.value=val;
-}
-function addSingleBrowniePopup(){
-  let qty=parseInt(document.getElementById('quantityInput').value);
-  cart.push({name:currentProduct.name,desc:currentProduct.desc,price:currentProduct.price*qty,qty:qty,img:currentProduct.img});
-  updateCart();closeQuantityPopup();showAdded();
-}
+function changeQty(amount){let input=document.getElementById('quantityInput');let val=parseInt(input.value)+amount;if(val<5)val=5;input.value=val;}
+function addSingleBrowniePopup(){let qty=parseInt(document.getElementById('quantityInput').value);cart.push({name:currentProduct.name,desc:currentProduct.desc,price:currentProduct.price*qty,qty:qty,img:currentProduct.img});updateCart();closeQuantityPopup();showAdded();}
 
-// Direct add to cart
-function addToCartDirect(name,desc,price,img){
-  cart.push({name:name,desc:desc,price:price,img:img});
-  updateCart();showAdded();
-}
+// Direct add
+function addToCartDirect(name,desc,price,img){cart.push({name:name,desc:desc,price:price,img:img});updateCart();showAdded();}
+function requestPrice(name){window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent("Hello, I would like to inquire about "+name));}
 
-// Request price
-function requestPrice(name){
-  window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent("Hello, I would like to inquire about "+name));
-}
-
-// Cart update
+// Cart
 function updateCart(){
   document.getElementById('cartCount').innerText=cart.length;
-  let html="";
-  let total=0;
-  cart.forEach((i,idx)=>{
-    total+=i.price;
-    html+=`<div class="cart-item">
-      <img src="${i.img}">
-      <div>
-        <b>${i.name}</b><br>
-        ${i.desc ? i.desc+"<br>" : ""}
-        ${i.qty ? "Quantity: "+i.qty+"<br>": ""}
-        ${i.message ? "Message: "+i.message+"<br>": ""}
-        ${i.toppings && i.toppings.length ? "Toppings: "+i.toppings.join(", ")+"<br>": ""}
-        <b>R${i.price}</b>
-        <div class="remove" onclick="removeItem(${idx})">Remove</div>
-      </div>
-    </div>`;
-  });
+  let html="",total=0;
+  cart.forEach((i,idx)=>{total+=i.price;html+=`<div class="cart-item"><img src="${i.img}"><div><b>${i.name}</b><br>${i.desc?i.desc+"<br>":""}${i.qty?"Quantity: "+i.qty+"<br>":""}${i.message?"Message: "+i.message+"<br>":""}${i.toppings&&i.toppings.length?"Toppings: "+i.toppings.join(", ")+"<br>":""}<b>R${i.price}</b><div class="remove" onclick="removeItem(${idx})">Remove</div></div></div>`;});
   document.getElementById('cartItems').innerHTML=html;
   document.getElementById('cartTotal').innerText="Total: R"+total;
 }
 
 function removeItem(idx){cart.splice(idx,1);updateCart();}
-function showAdded(){let m=document.getElementById('addedMsg');m.style.display='block';setTimeout(()=>{m.style.display='none';},1500);}
-function checkout(){
-  if(cart.length<1){alert("Cart is empty"); return;}
-  let text="Hello, I'd like to place an order:%0A%0A";
-  cart.forEach((i,idx)=>{
-    text+=`${idx+1}. ${i.name} - R${i.price}%0A`;
-    if(i.qty) text+=`Quantity: ${i.qty}%0A`;
-    if(i.message) text+=`Message: ${i.message}%0A`;
-    if(i.toppings && i.toppings.length) text+=`Toppings: ${i.toppings.join(", ")}%0A`;
-    text+="%0A";
-  });
-  window.open("https://wa.me/27XXXXXXXXX?text="+text);
-}
+function showAdded(){let m=document.getElementById('addedMsg');m.classList.add('show');setTimeout(()=>{m.classList.remove('show');},1500);}
+function checkout(){if(cart.length<1){alert("Cart is empty");return;}let text="Hello, I'd like to place an order:%0A%0A";cart.forEach((i,idx)=>{text+=`${idx+1}. ${i.name} - R${i.price}%0A`;if(i.qty)text+=`Quantity: ${i.qty}%0A`;if(i.message)text+=`Message: ${i.message}%0A`;if(i.toppings&&i.toppings.length)text+=`Toppings: ${i.toppings.join(", ")}%0A`;text+="%0A";});window.open("https://wa.me/27XXXXXXXXX?text="+text);}
 </script>
 
 </body>
