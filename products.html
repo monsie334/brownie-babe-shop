@@ -176,9 +176,9 @@ textarea, input[type=number]{
 <body>
 
 <header>
-<div class="header-left">Your brownie awaits!</div>
+<div class="header-left">Your brownie awaits !</div>
 <div class="header-right">
-  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a> | 
+  <a href="index.html">Home</a> | 
   <a href="#" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a>
 </div>
 </header>
@@ -229,7 +229,7 @@ textarea, input[type=number]{
 <div class="card" onclick="openPopup('All In One Brownie',360,true,'message')">
 <img src="images/all-in-one.jpeg">
 <h3>All In One Brownie</h3>
-<p>Box of 16 brownies</p>
+<p>Box of 16 brownies with a customised message and includes all toppings</p>
 <div class="price">R360</div>
 <div class="btn">ORDER NOW</div>
 </div>
@@ -237,7 +237,7 @@ textarea, input[type=number]{
 <div class="card" onclick="openPopup('Single Brownie',30,true,'quantity')">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
-<p>Duo brownie with milky bar and chocolate flavours.</p>
+<p>Perfect for a quick chocolate fix</p>
 <div class="price">R30</div>
 <div class="btn">ADD TO CART</div>
 </div>
@@ -294,9 +294,7 @@ let cart=[];
 let currentProduct={};
 let minQuantity=5;
 
-function toggleCart(){
-  document.getElementById('cart').classList.toggle('open');
-}
+function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
 function openPopup(name,price,needOption,type){
   currentProduct={name:name,price:price,type:type,option:null};
@@ -413,4 +411,3 @@ function checkout(){
 
 </body>
 </html>
-
