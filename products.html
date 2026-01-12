@@ -32,7 +32,7 @@ header{
 header h1{font-size:17px;margin:0;}
 .header-left{font-weight:700;font-size:17px;}
 .header-right{display:flex;gap:18px;align-items:center;}
-.header-right span{cursor:pointer;}
+.header-right a{color:#fff;text-decoration:none;cursor:pointer;}
 
 /* ===== PRODUCTS ===== */
 .products{
@@ -176,17 +176,17 @@ textarea, input[type=number]{
 <body>
 
 <header>
-<div class="header-left">Your brownie awaits !</div>
+<div class="header-left">Ready, Set, Go</div>
 <div class="header-right">
-  <span onclick="window.scrollTo({top:0,behavior:'smooth'})">Home</span> | 
-  <span onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</span>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a> | 
+  <a href="#" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</a>
 </div>
 </header>
 
 <section class="products">
 
 <!-- VALENTINE -->
-<div class="card" onclick="openPopup('Valentine Brownie',250,true,'message')">
+<div class="card" onclick="openPopup('Valentine Brownie',280,true,'message')">
 <img src="images/valentine-special1.jpeg">
 <h3>Valentine Brownie</h3>
 <p>Box of 16 brownies</p>
@@ -229,7 +229,7 @@ textarea, input[type=number]{
 <div class="card" onclick="openPopup('All In One Brownie',360,true,'message')">
 <img src="images/all-in-one.jpeg">
 <h3>All In One Brownie</h3>
-<p>Box of 16 brownies with a customised message and all the toppings.</p>
+<p>Box of 16 brownies</p>
 <div class="price">R360</div>
 <div class="btn">ORDER NOW</div>
 </div>
@@ -237,7 +237,7 @@ textarea, input[type=number]{
 <div class="card" onclick="openPopup('Single Brownie',30,true,'quantity')">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
-<p>Duo Oreo Brownies, Milky Bar and Chocolate flavour</p>
+<p>Duo brownie with milky bar and chocolate flavours.</p>
 <div class="price">R30</div>
 <div class="btn">ADD TO CART</div>
 </div>
@@ -272,7 +272,6 @@ textarea, input[type=number]{
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
 <h3 id="popupTitle"></h3>
-
 <div id="popupContent"></div>
 <div class="btn" id="popupBtn" onclick="popupAction()">Confirm</div>
 </div>
@@ -308,7 +307,7 @@ function openPopup(name,price,needOption,type){
     content+='<textarea id="message" placeholder="Write your message here..."></textarea>';
     content+='<b>Choose the following toppings (R20 each):</b>';
     content+='<div class="toppings">';
-    let tops=['Bueno (Kinder Joy)','Chocolate Variety','Oreo','Biscoff','M&M’s','Tex','Kit Kat','Kit Kat'];
+    let tops=['Bueno (Kinder Joy)','Chocolate Variety','Oreo','Biscoff','M&M’s','Tex','Kit Kat'];
     tops.forEach(t=>{content+=`<div class="topping" onclick="toggleTopping(this)">${t}</div>`});
     content+='</div><div class="total-line" id="popupTotal">Total: R'+price+'</div>';
   } else if(type==="message"){
@@ -347,7 +346,7 @@ function popupAction(){
   } else if(currentProduct.type==="quantity"){
     let qty=parseInt(document.getElementById('quantityInput').value);
     if(qty<minQuantity){alert('Minimum order '+minQuantity+' brownies'); return;}
-    cart.push({n:currentProduct.name,msg:'',toppings:[],p:currentProduct.price*qty,img:getImage(currentProduct.name)+'','qty':qty});
+    cart.push({n:currentProduct.name,msg:'',toppings:[],p:currentProduct.price*qty,img:getImage(currentProduct.name),qty:qty});
     showAdded();
   } else if(currentProduct.type==="add"){
     cart.push({n:currentProduct.name,msg:'',toppings:[],p:currentProduct.price,img:getImage(currentProduct.name)});
@@ -414,5 +413,3 @@ function checkout(){
 
 </body>
 </html>
-
-
