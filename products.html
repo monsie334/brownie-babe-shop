@@ -5,11 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brownie Babe | Products</title>
 <style>
-:root{
-  --cream:#f7f3ee;
-  --brown:#4b2e1e;
-  --green:#25D366;
-}
+:root{--cream:#f7f3ee;--brown:#4b2e1e;--green:#25D366;}
 *{box-sizing:border-box;font-family:Poppins,Arial;}
 body{margin:0;background:var(--cream);}
 header{background:#000;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
@@ -18,7 +14,7 @@ header .header-icons span{cursor:pointer;font-weight:600;}
 .products{padding:16px;display:grid;grid-template-columns:1fr;gap:20px;}
 @media(min-width:600px){.products{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.products{grid-template-columns:1fr 1fr 1fr;}}
-.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s;}
+.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);transition:transform .2s;}
 .card:hover{transform:scale(1.02);}
 .card img{width:100%;border-radius:18px;}
 .card h3{margin:12px 0 6px;}
@@ -61,89 +57,89 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 
 <section class="products">
 
-<!-- Product Cards -->
-<div class="card" onclick="addToCartDirect('Valentine Special','Romantic brownie made to spoil someone special',280,'images/valentine-special1.jpeg')">
+<!-- Products -->
+<div class="card">
 <img src="images/valentine-special1.jpeg">
 <h3>Valentine Special</h3>
 <p>Romantic brownie made to spoil someone special.</p>
 <div class="price">R280</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special','Romantic brownie made to spoil someone special',280,'images/valentine-special1.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="addToCartDirect('Valentine Special Deluxe','Extra indulgent, beautifully decorated and gift-ready',120,'images/valentine-special2.jpeg')">
+<div class="card">
 <img src="images/valentine-special2.jpeg">
 <h3>Valentine Special Deluxe</h3>
 <p>Extra indulgent, beautifully decorated and gift-ready.</p>
 <div class="price">R120</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Valentine Special Deluxe','Extra indulgent, beautifully decorated and gift-ready',120,'images/valentine-special2.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="openPopup('Customised Brownie','Box of 16 brownies with a personalised message and toppings',250,true,true,'images/customised.jpeg')">
+<div class="card">
 <img src="images/customised.jpeg">
 <h3>Customised Brownie</h3>
 <p>Box of 16 brownies with a personalised message and toppings.</p>
 <div class="price">R250</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="openPopup('Customised Brownie','Box of 16 brownies with a personalised message and toppings',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="openPopup('Small Customised Brownie','Box of 3 brownies – small, sweet and personal',120,true,true,'images/small-customised.jpeg')">
+<div class="card">
 <img src="images/small-customised.jpeg">
 <h3>Small Customised Brownie</h3>
 <p>Box of 3 brownies – small, sweet and personal.</p>
 <div class="price">R120</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="openPopup('Small Customised Brownie','Box of 3 brownies – small, sweet and personal',120,true,true,'images/small-customised.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="addToCartDirect('Overload Brownie','All the toppings. Maximum indulgence',280,'images/overload.jpeg')">
+<div class="card">
 <img src="images/overload.jpeg">
 <h3>Overload Brownie</h3>
 <p>All the toppings. Maximum indulgence.</p>
 <div class="price">R280</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Overload Brownie','All the toppings. Maximum indulgence',280,'images/overload.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with a custom message only',360,false,true,'images/all-in-one.jpeg')">
+<div class="card">
 <img src="images/all-in-one.jpeg">
 <h3>All-In-One Brownie</h3>
 <p>Box of 16 brownies with a custom message only.</p>
 <div class="price">R360</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with a custom message only',360,false,true,'images/all-in-one.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="openQuantityPopup('Single Brownie','Minimum 5 brownies',30,'images/single.jpeg')">
+<div class="card">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
 <p>Perfect for a quick chocolate fix. Minimum 5.</p>
 <div class="price">R30 each</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="openQuantityPopup('Single Brownie','Minimum 5 brownies',30,'images/single.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="addToCartDirect('Fudge','Rich, soft and deeply chocolatey',20,'images/fudge.jpeg')">
+<div class="card">
 <img src="images/fudge.jpeg">
 <h3>Fudge</h3>
 <p>Rich, soft and deeply chocolatey.</p>
 <div class="price">R20</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Fudge','Rich, soft and deeply chocolatey',20,'images/fudge.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="addToCartDirect('Trio Box','Milky Bar, Chocolate Ganache, Caramel',100,'images/trio-box.jpeg')">
+<div class="card">
 <img src="images/trio-box.jpeg">
 <h3>Trio Box</h3>
 <p>Milky Bar, Chocolate Ganache, Caramel</p>
 <div class="price">R100</div>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="addToCartDirect('Trio Box','Milky Bar, Chocolate Ganache, Caramel',100,'images/trio-box.jpeg')">ADD TO CART</div>
 </div>
 
-<div class="card" onclick="requestPrice('Specialty Brownie')">
+<div class="card">
 <img src="images/specialty-brownie.jpeg">
 <h3>Specialty Brownie</h3>
 <p>Price on request</p>
-<div class="btn">ADD TO CART</div>
+<div class="btn" onclick="requestPrice('Specialty Brownie')">ADD TO CART</div>
 </div>
 
 </section>
 
-<!-- Popups -->
+<!-- Popups and Quantity Popup -->
 <div class="popup" id="popup">
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
@@ -195,15 +191,11 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 <script>
 let cart=[], currentProduct=null, basePrice=0, needsTopping=false, needsMessage=false;
 
-// Home
 function goHome(){window.location.href="index.html";}
-
-// Cart toggle
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
-// Popups
 function openPopup(name,desc,price,toppingReq,messageReq,img){
-  currentProduct={name:name,desc:desc,price:price,img:img};
+  currentProduct={name,desc,price,img};
   basePrice=price;needsTopping=toppingReq;needsMessage=messageReq;
   document.getElementById('popupTitle').innerText=name;
   document.getElementById('popupDesc').innerText=desc;
@@ -222,31 +214,37 @@ function addToCartPopup(){
   let message=document.getElementById('message').value;
   if(needsTopping && toppings.length<1){alert("Choose at least 1 topping");return;}
   if(needsMessage && !message){alert("Write a message");return;}
-  cart.push({name:currentProduct.name,desc:currentProduct.desc,message:message,toppings:toppings,price:basePrice+toppings.length*20,img:currentProduct.img,qty:1});
+  cart.push({name:currentProduct.name,desc:currentProduct.desc,message, toppings,price:basePrice+toppings.length*20,img:currentProduct.img,qty:1});
   updateCart();closePopup();showAdded();
 }
 
-// Quantity
+// Quantity popup
 function openQuantityPopup(name,desc,price,img){
-  currentProduct={name:name,desc:desc,price:price,img:img};
+  currentProduct={name,desc,price,img};
   document.getElementById('quantityTitle').innerText=name;
   document.getElementById('quantityDesc').innerText=desc;
   document.getElementById('quantityInput').value=5;
   document.getElementById('quantityPopup').style.display='flex';
 }
 function closeQuantityPopup(){document.getElementById('quantityPopup').style.display='none';}
-function changeQty(amount){let input=document.getElementById('quantityInput');let val=parseInt(input.value)+amount;if(val<5)val=5;input.value=val;}
+function changeQty(amount){
+  let input=document.getElementById('quantityInput');
+  let val=parseInt(input.value)+amount;if(val<5)val=5;input.value=val;
+}
 function addSingleBrowniePopup(){
   let qty=parseInt(document.getElementById('quantityInput').value);
-  cart.push({name:currentProduct.name,desc:currentProduct.desc,price:currentProduct.price*qty,qty:qty,img:currentProduct.img});
+  cart.push({name:currentProduct.name,desc:currentProduct.desc,price:currentProduct.price*qty,img:currentProduct.img,qty:qty});
   updateCart();closeQuantityPopup();showAdded();
 }
 
 // Direct add
-function addToCartDirect(name,desc,price,img){cart.push({name:name,desc:desc,price:price,qty:1,img:img});updateCart();showAdded();}
+function addToCartDirect(name,desc,price,img){
+  cart.push({name,desc,price,img,qty:1});
+  updateCart();showAdded();
+}
 function requestPrice(name){window.open("https://wa.me/27XXXXXXXXX?text="+encodeURIComponent("Hello, I would like to inquire about "+name));}
 
-// Cart
+// Cart functions
 function updateCart(){
   document.getElementById('cartCount').innerText=cart.length;
   let html="",total=0;
@@ -257,7 +255,6 @@ function updateCart(){
   document.getElementById('cartItems').innerHTML=html;
   document.getElementById('cartTotal').innerText="Total: R"+total;
 }
-
 function removeItem(idx){cart.splice(idx,1);updateCart();}
 function showAdded(){let m=document.getElementById('addedMsg');m.classList.add('show');setTimeout(()=>{m.classList.remove('show');},1500);}
 function checkout(){
@@ -267,5 +264,6 @@ function checkout(){
   window.open("https://wa.me/27XXXXXXXXX?text="+text);
 }
 </script>
+
 </body>
 </html>
