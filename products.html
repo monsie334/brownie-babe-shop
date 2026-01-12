@@ -18,12 +18,13 @@ header h1{margin:0;font-size:20px;}
 .products{padding:16px;display:grid;grid-template-columns:1fr;gap:20px;}
 @media(min-width:600px){.products{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.products{grid-template-columns:1fr 1fr 1fr;}}
-.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);}
+.card{background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 25px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s;}
+.card:hover{transform:scale(1.02);}
 .card img{width:100%;border-radius:18px;}
 .card h3{margin:12px 0 6px;}
 .card p{font-size:14px;line-height:1.4;min-height:40px;}
 .price{font-weight:700;font-size:18px;margin:8px 0;}
-.btn{background:var(--brown);color:#fff;padding:12px;border-radius:16px;text-align:center;font-weight:600;cursor:pointer;display:block;}
+.btn{background:var(--brown);color:#fff;padding:12px;border-radius:16px;text-align:center;font-weight:600;cursor:pointer;margin-top:8px;}
 .btn:hover{background:#000;}
 .popup, .quantity-popup{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;}
 .popup-box, .quantity-box{background:#fff;width:90%;max-width:400px;padding:20px;border-radius:20px;position:relative;max-height:90vh;overflow:auto;}
@@ -60,88 +61,88 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 
 <section class="products">
 
-<!-- Products -->
-<div class="card">
+<!-- Product Cards -->
+<div class="card" onclick="addToCartDirect('Valentine Special','Romantic brownie made to spoil someone special',280,'images/valentine-special1.jpeg')">
 <img src="images/valentine-special1.jpeg">
 <h3>Valentine Special</h3>
 <p>Romantic brownie made to spoil someone special.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="addToCartDirect('Valentine Special','Romantic brownie made to spoil someone special',280,'images/valentine-special1.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="addToCartDirect('Valentine Special Deluxe','Extra indulgent, beautifully decorated and gift-ready',120,'images/valentine-special2.jpeg')">
 <img src="images/valentine-special2.jpeg">
 <h3>Valentine Special Deluxe</h3>
 <p>Extra indulgent, beautifully decorated and gift-ready.</p>
 <div class="price">R120</div>
-<div class="btn" onclick="addToCartDirect('Valentine Special Deluxe','Extra indulgent, beautifully decorated and gift-ready',120,'images/valentine-special2.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="openPopup('Customised Brownie','Box of 16 brownies with a personalised message and toppings',250,true,true,'images/customised.jpeg')">
 <img src="images/customised.jpeg">
 <h3>Customised Brownie</h3>
 <p>Box of 16 brownies with a personalised message and toppings.</p>
 <div class="price">R250</div>
-<div class="btn" onclick="openPopup('Customised Brownie','Box of 16 brownies with a personalised message and toppings',250,true,true,'images/customised.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="openPopup('Small Customised Brownie','Box of 3 brownies – small, sweet and personal',120,true,true,'images/small-customised.jpeg')">
 <img src="images/small-customised.jpeg">
 <h3>Small Customised Brownie</h3>
 <p>Box of 3 brownies – small, sweet and personal.</p>
 <div class="price">R120</div>
-<div class="btn" onclick="openPopup('Small Customised Brownie','Box of 3 brownies – small, sweet and personal',120,true,true,'images/small-customised.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="addToCartDirect('Overload Brownie','All the toppings. Maximum indulgence',280,'images/overload.jpeg')">
 <img src="images/overload.jpeg">
 <h3>Overload Brownie</h3>
 <p>All the toppings. Maximum indulgence.</p>
 <div class="price">R280</div>
-<div class="btn" onclick="addToCartDirect('Overload Brownie','All the toppings. Maximum indulgence',280,'images/overload.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with a custom message only',360,false,true,'images/all-in-one.jpeg')">
 <img src="images/all-in-one.jpeg">
 <h3>All-In-One Brownie</h3>
 <p>Box of 16 brownies with a custom message only.</p>
 <div class="price">R360</div>
-<div class="btn" onclick="openPopup('All-In-One Brownie','Box of 16 brownies with a custom message only',360,false,true,'images/all-in-one.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="openQuantityPopup('Single Brownie','Minimum 5 brownies',30,'images/single.jpeg')">
 <img src="images/single.jpeg">
 <h3>Single Brownie</h3>
 <p>Perfect for a quick chocolate fix. Minimum 5.</p>
 <div class="price">R30 each</div>
-<div class="btn" onclick="openQuantityPopup('Single Brownie','Perfect for a quick chocolate fix. Minimum 5',30,'images/single.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="addToCartDirect('Fudge','Rich, soft and deeply chocolatey',20,'images/fudge.jpeg')">
 <img src="images/fudge.jpeg">
 <h3>Fudge</h3>
 <p>Rich, soft and deeply chocolatey.</p>
 <div class="price">R20</div>
-<div class="btn" onclick="addToCartDirect('Fudge','Rich, soft and deeply chocolatey',20,'images/fudge.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="addToCartDirect('Trio Box','Milky Bar, Chocolate Ganache, Caramel',100,'images/trio-box.jpeg')">
 <img src="images/trio-box.jpeg">
 <h3>Trio Box</h3>
 <p>Milky Bar, Chocolate Ganache, Caramel</p>
 <div class="price">R100</div>
-<div class="btn" onclick="addToCartDirect('Trio Box','Milky Bar, Chocolate Ganache, Caramel',100,'images/trio-box.jpeg')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="requestPrice('Specialty Brownie')">
 <img src="images/specialty-brownie.jpeg">
 <h3>Specialty Brownie</h3>
 <p>Price on request</p>
-<div class="btn" onclick="requestPrice('Specialty Brownie')">ADD TO CART</div>
+<div class="btn">ADD TO CART</div>
 </div>
 </section>
 
-<!-- Popups -->
+<!-- Popups and Cart -->
 <div class="popup" id="popup">
 <div class="popup-box">
 <span class="close" onclick="closePopup()">✕</span>
@@ -164,7 +165,6 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 </div>
 </div>
 
-<!-- Quantity Popup -->
 <div class="quantity-popup" id="quantityPopup">
 <div class="quantity-box">
 <span class="close" onclick="closeQuantityPopup()">✕</span>
@@ -179,7 +179,6 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 </div>
 </div>
 
-<!-- Cart -->
 <div class="cart" id="cart">
 <div class="cart-header">
 <h2>Your Cart</h2>
@@ -195,6 +194,7 @@ textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ccc;margin
 <script>
 let cart=[], currentProduct=null, basePrice=0, needsTopping=false, needsMessage=false;
 
+// Cart toggle
 function toggleCart(){document.getElementById('cart').classList.toggle('open');}
 
 // Popups
