@@ -1,345 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<title>Our Brownies – Brownie Babe</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Archivo+Black&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Brownie Babe Shop</title>
 
 <style>
-body{
-    margin:0;
-    background:#F8F5F0;
-    font-family:'Archivo',sans-serif;
-    color:#4B3932;
+:root{
+  --bg:#fff;
+  --brown:#4b2e1e;
+  --cream:#f6f1eb;
+  --black:#000;
+  --accent:#ff5a7a;
 }
 
-/* HEADER */
-.header{
-    background:#000;
-    color:#fff;
-    padding:22px 6%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:2000;
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{margin:0;background:var(--cream);color:#333;}
+
+/* ===== HEADER ===== */
+header{
+  background:#000;
+  color:#fff;
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.header h1{
-    font-family:'Archivo Black';
-    font-size:24px;
-    margin:0;
+header h1{font-size:18px;margin:0;}
+.cart-btn{
+  position:relative;
+  font-size:26px;
+  cursor:pointer;
+}
+.cart-btn::after{
+  content:"";
+  width:26px;
+  height:18px;
+  border:3px solid #fff;
+  border-radius:6px;
+  display:inline-block;
+  position:relative;
+}
+.cart-btn span{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:50%;
+  font-size:12px;
+  padding:2px 6px;
 }
 
-/* CART ICON */
-.cart-icon{
-    width:42px;
-    height:28px;
-    border:3px solid white;
-    border-radius:6px;
-    position:relative;
-    cursor:pointer;
-}
-.cart-icon::before,
-.cart-icon::after{
-    content:'';
-    position:absolute;
-    bottom:-10px;
-    width:10px;
-    height:10px;
-    background:white;
-    border-radius:50%;
-}
-.cart-icon::before{ left:6px; }
-.cart-icon::after{ right:6px; }
-.cart-icon.bounce{ animation:bounce .5s; }
-@keyframes bounce{
-    0%{transform:scale(1)}
-    30%{transform:scale(1.2)}
-    60%{transform:scale(.95)}
-    100%{transform:scale(1)}
-}
-
-/* TITLE */
-.page-title{
-    text-align:center;
-    font-family:'Archivo Black';
-    font-size:34px;
-    margin:30px 0;
-}
-
-/* PRODUCTS */
+/* ===== PRODUCTS ===== */
 .products{
-    padding:0 6% 100px;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:28px;
+  padding:16px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
 }
-.product{
-    background:#fff;
-    border-radius:25px;
-    padding:20px;
-    box-shadow:0 12px 30px rgba(0,0,0,0.12);
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 10px 20px rgba(0,0,0,.08);
 }
-.product img{
-    width:100%;
-    height:280px;
-    object-fit:contain;
+.card img{
+  width:100%;
+  border-radius:16px;
 }
-.product h3{
-    font-family:'Archivo Black';
-    font-size:20px;
-}
-.price{
-    font-size:22px;
-    font-weight:bold;
-}
-.desc{
-    font-size:14px;
-    line-height:1.5;
-    margin:8px 0 15px;
-}
-.order-btn{
-    background:#000;
-    color:#fff;
-    padding:14px;
-    border-radius:30px;
-    border:none;
-    width:100%;
-    font-size:16px;
-    font-weight:bold;
+.card h3{margin:12px 0 6px;}
+.card p{font-size:14px;}
+.price{font-weight:bold;margin:8px 0;}
+.btn{
+  background:#000;
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  cursor:pointer;
+  margin-top:10px;
 }
 
-/* MODAL */
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.75);
-    z-index:3000;
-    justify-content:center;
-    align-items:center;
+/* ===== POPUP ===== */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
 }
-.modal-box{
-    background:#fff;
-    width:95%;
-    max-width:620px;
-    padding:25px;
-    border-radius:25px;
-    max-height:90vh;
-    overflow-y:auto;
+.popup-content{
+  background:#fff;
+  width:92%;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:20px;
 }
-.modal img{
-    width:100%;
-    height:260px;
-    object-fit:contain;
+.close{
+  font-size:24px;
+  cursor:pointer;
+  float:right;
 }
-.modal h3{
-    font-family:'Archivo Black';
-    font-size:24px;
+input, textarea{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid #ccc;
+  font-size:16px;
 }
-textarea{
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:2px solid #4B3932;
-    font-size:16px;
-}
-
-/* TOPPINGS */
+textarea{resize:none;}
 .toppings{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
 }
 .topping{
-    padding:10px 14px;
-    border-radius:20px;
-    border:2px solid #4B3932;
-    cursor:pointer;
+  padding:10px 14px;
+  border-radius:20px;
+  border:2px solid var(--brown);
+  cursor:pointer;
 }
 .topping.active{
-    background:#4B3932;
-    color:#fff;
+  background:var(--brown);
+  color:#fff;
 }
 
-/* CART */
-#cart{
-    position:fixed;
-    top:50%;
-    right:-450px;
-    transform:translateY(-50%);
-    width:420px;
-    background:#fff;
-    border-radius:30px 0 0 30px;
-    padding:25px;
-    transition:.3s;
-    z-index:2500;
+/* ===== CART ===== */
+.cart{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:88%;
+  height:100%;
+  background:#fff;
+  z-index:20;
+  padding:20px;
+  transition:.3s;
 }
-#cart.open{ right:0; }
-.cart-header{
-    font-family:'Archivo Black';
-    font-size:22px;
-    display:flex;
-    justify-content:space-between;
-}
+.cart.open{right:0;}
+.cart h2{text-align:center;}
 .cart-item{
-    margin:15px 0;
+  border-bottom:1px solid #eee;
+  padding:10px 0;
 }
-.cart-total{
-    font-size:22px;
-    font-weight:bold;
-    margin-top:15px;
-}
+.remove{color:red;font-size:14px;cursor:pointer;}
 .checkout{
-    margin-top:15px;
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:30px;
-    background:#25D366;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
+  background:#25D366;
+  color:#fff;
+  padding:16px;
+  text-align:center;
+  border-radius:14px;
+  margin-top:20px;
 }
-
-/* TOAST */
-.toast{
-    position:fixed;
-    bottom:30px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#000;
-    color:#fff;
-    padding:14px 22px;
-    border-radius:30px;
-    font-weight:bold;
-    opacity:0;
-    z-index:4000;
-}
-.toast.show{ animation:toast 2s forwards; }
-@keyframes toast{
-    0%{opacity:0; transform:translate(-50%,20px)}
-    20%{opacity:1; transform:translate(-50%,0)}
-    80%{opacity:1}
-    100%{opacity:0}
+.added{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:30px;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-<h1>Hey babe, are you ready to shop?</h1>
-<div class="cart-icon" id="cartIcon" onclick="toggleCart()"></div>
-</div>
+<header>
+  <h1>Hey babe, ready to shop?</h1>
+  <div class="cart-btn" onclick="toggleCart()">🛒<span id="count">0</span></div>
+</header>
 
-<h2 class="page-title">Our Brownies</h2>
+<section class="products">
 
-<div class="products">
-<div class="product">
-<img src="images/customised.jpeg">
+<!-- CUSTOMISED BROWNIE -->
+<div class="card">
+<img src="customised.jpeg">
 <h3>Customised Brownie</h3>
+<p>Box of 16 rich brownies with a personalised message and toppings of your choice.</p>
 <div class="price">R250</div>
-<div class="desc">
-Box of 16 brownies with toppings of your choice and a personalised message.
+<div class="btn" onclick="openPopup('Customised Brownie', true)">ORDER NOW</div>
 </div>
-<button class="order-btn" onclick="openModal()">ORDER NOW</button>
+
+<!-- OVERLOAD -->
+<div class="card">
+<img src="overload.jpeg">
+<h3>Overload Brownie</h3>
+<p>A brownie loaded with ALL the toppings. Decadent, rich and indulgent.</p>
+<div class="price">R280</div>
+<div class="btn" onclick="openPopup('Overload Brownie', false)">ORDER NOW</div>
+</div>
+
+<!-- ALL IN ONE -->
+<div class="card">
+<img src="all-in-one.jpeg">
+<h3>All-In-One Brownie</h3>
+<p>Box of 16 brownies with a customised message and all the toppings.</p>
+<div class="price">R300</div>
+<div class="btn" onclick="openPopup('All In One', true)">ORDER NOW</div>
+</div>
+
+</section>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-content">
+<span class="close" onclick="closePopup()">✕</span>
+<h3 id="popupTitle"></h3>
+
+<b>Write a message</b>
+<textarea id="message" placeholder="Type your message here..."></textarea>
+
+<b>Select toppings (R20 each)</b>
+<p style="font-size:13px">Choose at least 1 topping</p>
+<div class="toppings">
+<div class="topping" onclick="toggleTopping(this)">Oreos</div>
+<div class="topping" onclick="toggleTopping(this)">KitKat</div>
+<div class="topping" onclick="toggleTopping(this)">Caramel</div>
+<div class="topping" onclick="toggleTopping(this)">Smarties</div>
+</div>
+
+<div class="btn" onclick="addToCart()">Add to Cart</div>
 </div>
 </div>
 
-<div class="modal" id="modal">
-<div class="modal-box">
-<h3>Customised Brownie</h3>
-<p><strong>Choose at least 1 topping</strong> (R20 per topping)</p>
-
-<div class="toppings" id="toppingsBox"></div>
-
-<textarea id="message" placeholder="Write your custom message..."></textarea>
-
-<button class="order-btn" onclick="addToCart()">ADD TO CART</button>
-</div>
-</div>
-
-<div id="cart">
-<div class="cart-header">
-<span>Your Cart</span>
-<span onclick="toggleCart()">✕</span>
-</div>
+<!-- CART -->
+<div class="cart" id="cart">
+<h2>Your Cart</h2>
 <div id="cartItems"></div>
-<div class="cart-total" id="cartTotal"></div>
-<button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
+<div class="checkout" onclick="checkout()">Checkout via WhatsApp</div>
 </div>
 
-<div class="toast" id="toast">Added to cart 🤎</div>
+<div class="added" id="addedMsg">Added to cart 🖤</div>
 
 <script>
-const toppingsList=['Chocolate','Tex','M&M','Bueno','Biscoff','Oreos'];
-let cart=[], toppings=[];
+let cart=[];
+let currentProduct="";
+let needsTopping=false;
 
-function openModal(){
-    toppings=[];
-    document.getElementById('toppingsBox').innerHTML='';
-    toppingsList.forEach(t=>{
-        let d=document.createElement('div');
-        d.className='topping';
-        d.innerText=t;
-        d.onclick=()=>{d.classList.toggle('active');
-            toppings.includes(t)?toppings=toppings.filter(x=>x!==t):toppings.push(t);}
-        document.getElementById('toppingsBox').appendChild(d);
-    });
-    document.getElementById('modal').style.display='flex';
+function toggleCart(){
+  document.getElementById('cart').classList.toggle('open');
+}
+
+function openPopup(name, topping){
+  currentProduct=name;
+  needsTopping=topping;
+  document.getElementById('popupTitle').innerText=name;
+  document.getElementById('popup').style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById('popup').style.display="none";
+}
+
+function toggleTopping(el){
+  el.classList.toggle('active');
 }
 
 function addToCart(){
-    if(toppings.length<1){
-        alert('Please choose at least 1 topping 🍫');
-        return;
-    }
-    let price=250 + toppings.length*20;
-    cart.push({name:'Customised Brownie',price,toppings,message:message.value});
-    document.getElementById('modal').style.display='none';
-    renderCart();
-    showToast();
-    bounceCart();
+  let toppings=[...document.querySelectorAll('.topping.active')].map(t=>t.innerText);
+  if(needsTopping && toppings.length<1){
+    alert("Please select at least 1 topping");
+    return;
+  }
+  cart.push({name:currentProduct,toppings});
+  updateCart();
+  closePopup();
+  showAdded();
 }
 
-function renderCart(){
-    let box=document.getElementById('cartItems');
-    let total=0;
-    box.innerHTML='';
-    cart.forEach(i=>{
-        total+=i.price;
-        box.innerHTML+=`
-        <div class="cart-item">
-        <strong>${i.name}</strong><br>
-        Toppings: ${i.toppings.join(', ')}<br>
-        Message: ${i.message}<br>
-        R${i.price}
-        </div>`;
-    });
-    cartTotal.innerText='Total: R'+total;
+function updateCart(){
+  document.getElementById('count').innerText=cart.length;
+  let html="";
+  cart.forEach((i,idx)=>{
+    html+=`<div class="cart-item">
+    <b>${i.name}</b><br>
+    ${i.toppings.join(', ')}
+    <div class="remove" onclick="removeItem(${idx})">Remove</div>
+    </div>`;
+  });
+  document.getElementById('cartItems').innerHTML=html;
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  updateCart();
+}
+
+function showAdded(){
+  let m=document.getElementById('addedMsg');
+  m.style.display="block";
+  setTimeout(()=>m.style.display="none",1500);
 }
 
 function checkout(){
-    let msg='Hello! I would like to order:\n\n';
-    cart.forEach((i,n)=>{
-        msg+=`${n+1}. ${i.name} - R${i.price}\nToppings: ${i.toppings.join(', ')}\nMessage: ${i.message}\n\n`;
-    });
-    window.open('https://wa.me/27689795490?text='+encodeURIComponent(msg),'_blank');
+  let text="Hello, I'd like to order:%0A";
+  cart.forEach(i=>{
+    text+=`- ${i.name} (${i.toppings.join(', ')})%0A`;
+  });
+  window.open(`https://wa.me/27XXXXXXXXX?text=${text}`);
 }
-
-function toggleCart(){cartDiv.classList.toggle('open');}
-function showToast(){toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2000);}
-function bounceCart(){cartIcon.classList.add('bounce');setTimeout(()=>cartIcon.classList.remove('bounce'),500);}
-
-const cartDiv=document.getElementById('cart');
-const cartIcon=document.getElementById('cartIcon');
-const toast=document.getElementById('toast');
 </script>
 
 </body>
